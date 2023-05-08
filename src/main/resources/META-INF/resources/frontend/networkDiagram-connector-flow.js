@@ -1,16 +1,17 @@
 window.Vaadin.Flow.timelineDiagramConnector = {
-	initLazy : function(graph, initialDataSet, options) {
+	initLazy : function(theTimeLine, initialDataSet, initialGroups, options) {
 
 		// Check whether the connector was already initialized for the Iron list
-		if (graph.$connector) {
+		if (theTimeLine.$connector) {
 			return;
 		}
 		console.log('init networkDiagramConnector');
 
-		graph.$connector = {};
+		theTimeLine.$connector = {};
 
 		console.log(initDataSet);
-		graph.nodes = new vis.DataSet(JSON.parse(initialDataSet));
+		theTimeLine.items = new vis.itemsSet(JSON.parse(initialDataSet));
+		theTimeLine.groups = new vis.itemsSet(JSON.parse(initialGroups));
 
 
 		var self = this;
@@ -21,8 +22,9 @@ window.Vaadin.Flow.timelineDiagramConnector = {
 		var customEdgeID;
 		var customEdgeLabel;
 
-		graph.options = JSON.parse(options);
-		graph.options.manipulation.addNode = function(nodeData, callback) {
+		theTimeLine.options = JSON.parse(options);
+
+		theTimeLine.options.manipulation.addNode = function(nodeData, callback) {
 			if (customNodeifAdded == true) {
 				nodeData.label = customNodeLabel;
 				nodeData.id = customNodeID;
@@ -30,7 +32,8 @@ window.Vaadin.Flow.timelineDiagramConnector = {
 			self.onManipulationNodeAdded(nodeData);
 			callback(nodeData);
 		};
-		graph.options.manipulation.addEdge = function(edgeData, callback) {
+
+		theTimeLine.options.manipulation.addEdge = function(edgeData, callback) {
 			if (customEdgeifAdded == true) {
 				edgeData.label = customEdgeLabel;
 				edgeData.id = customEdgeID;
@@ -38,29 +41,32 @@ window.Vaadin.Flow.timelineDiagramConnector = {
 			self.onManipulationEdgeAdded(edgeData);
 			callback(edgeData);
 		};
-		graph.options.manipulation.deleteNode = function(nodeData, callback) {
+
+		theTimeLine.options.manipulation.deleteNode = function(nodeData, callback) {
 			self.onManipulationNodeDeleted(nodeData);
 			callback(nodeData);
 		};
-		graph.options.manipulation.deleteEdge = function(edgeData, callback) {
+
+		theTimeLine.options.manipulation.deleteEdge = function(edgeData, callback) {
 			self.onManipulationEdgeDeleted(edgeData);
 			callback(edgeData);
 		};
-		graph.options.manipulation.editEdge = function(edgeData, callback) {
+
+		theTimeLine.options.manipulation.editEdge = function(edgeData, callback) {
 			self.onManipulationEdgeEdited(edgeData);
 			callback(edgeData);
 		};
-		console.log("networkdiagram options: " + JSON.stringify(graph.options));
-		graph.$connector.diagram = new vis.Network(graph, {
-			nodes : graph.nodes,
-			edges : graph.edges
-		}, graph.options);
+
+		console.log("networkdiagram options: " + JSON.stringify(theTimeLine.options));
+
+		theTimeLine.$connector.diagram = new vis.Timeline(theTimeLine, theTimeLine.items,
+			theTimeLine.groups, theTimeLine.options);
 
 		// Enable event dispatching to vaadin only for registered eventTypes to
 		// avoid to much overhead.
-		graph.$connector.enableEventDispatching = function(vaadinEventType) {
+		theTimeLine.$connector.enableEventDispatching = function(vaadinEventType) {
 			const eventType = vaadinEventType.substring(7);
-			graph.$connector.diagram
+			theTimeLine.$connector.diagram
 					.on(
 							eventType,
 							function(params) {
@@ -92,7 +98,7 @@ window.Vaadin.Flow.timelineDiagramConnector = {
 														return value;
 													});
 								}
-								graph.dispatchEvent(new CustomEvent(
+								theTimeLine.dispatchEvent(new CustomEvent(
 										vaadinEventType, {
 											detail : params
 										}));
@@ -100,86 +106,86 @@ window.Vaadin.Flow.timelineDiagramConnector = {
 		}
 
 		// not used yet
-		graph.$connector.disableEventDispatching = function(vaadinEventType) {
+		theTimeLine.$connector.disableEventDispatching = function(vaadinEventType) {
 			const eventType = vaadinEventType.substring(7);
 			console.log("disable registered eventType " + eventType);
-			graph.diagram.off(eventType, function(params) {
-				graph.dispatchEvent(new Event(vaadinEventType));
+			theTimeLine.diagram.off(eventType, function(params) {
+				theTimeLine.dispatchEvent(new Event(vaadinEventType));
 			});
 		}
 
-		graph.$connector.addEdges = function(edges) {
+		theTimeLine.$connector.addEdges = function(edges) {
 			let edgesObject = JSON.parse(edges);
-			graph.edges.add(edgesObject);
+			theTimeLine.edges.add(edgesObject);
 		}
 
-		graph.$connector.updateEdges = function(edges) {
+		theTimeLine.$connector.updateEdges = function(edges) {
 			alert('updateEdges: ' + edges);
 		}
 
-		graph.$connector.setNodes = function(index, nodes) {
+		theTimeLine.$connector.setNodes = function(index, nodes) {
 			console.log("setNodes " + JSON.stringify(nodes));
-			for (let i = 0; i < graph.nodes.length; i++) {
+			for (let i = 0; i < theTimeLine.items.length; i++) {
 				// const itemsIndex = index + i;
 				// console.log(typeof nodes[i])
-				// console.log(typeof nodes[i].nodes)
-				const node = JSON.parse(nodes[i].nodes);
+				// console.log(typeof nodes[i].items)
+				const node = JSON.parse(nodes[i].items);
 				// console.log(JSON.stringify(node));
-				graph.nodes.add(node);
+				theTimeLine.items.add(node);
 			}
 		}
 
-		graph.$connector.addNodes = function(nodes) {
+		theTimeLine.$connector.addNodes = function(nodes) {
 			// console.log("addNodes: " + typeof nodes + "=" +
 			// JSON.stringify(nodes));
 			let nodesObject = JSON.parse(nodes);
 			// console.log("addNodesParsed: " + typeof nodesObject + "=" +
 			// JSON.stringify(nodesObject));
-			graph.nodes.add(nodesObject);
+			theTimeLine.items.add(nodesObject);
 		}
 
-		graph.$connector.updateNodes = function(nodes) {
+		theTimeLine.$connector.updateNodes = function(nodes) {
 			alert('updateNodes: ' + nodes);
 		}
 
-		graph.$connector.clearNodes = function() {
-			graph.nodes.clear();
+		theTimeLine.$connector.clearNodes = function() {
+			theTimeLine.items.clear();
 		};
 
-		graph.$connector.clearEdges = function() {
-			graph.edges.clear();
+		theTimeLine.$connector.clearEdges = function() {
+			theTimeLine.edges.clear();
 		};
 
-		graph.$connector.updateNodesSize = function(newSize) {
-			const delta = newSize - graph.nodes.length;
+		theTimeLine.$connector.updateNodesSize = function(newSize) {
+			const delta = newSize - theTimeLine.items.length;
 			if (delta > 0) {
-				graph.nodes.length = newSize;
+				theTimeLine.items.length = newSize;
 
-				// graph.notifySplices("nodes", [{index: newSize - delta,
-				// removed: [], addedCount : delta, object: graph.nodes, type:
+				// theTimeLine.notifySplices("nodes", [{index: newSize - delta,
+				// removed: [], addedCount : delta, object: theTimeLine.items, type:
 				// "splice"}]);
 			} else if (delta < 0) {
-				const removed = graph.nodes.slice(newSize, graph.nodes.length);
-				graph.nodes.splice(newSize);
-				// graph.notifySplices("nodes", [{index: newSize, removed:
-				// removed, addedCount : 0, object: graph.nodes, type:
+				const removed = theTimeLine.items.slice(newSize, theTimeLine.items.length);
+				theTimeLine.items.splice(newSize);
+				// theTimeLine.notifySplices("nodes", [{index: newSize, removed:
+				// removed, addedCount : 0, object: theTimeLine.items, type:
 				// "splice"}]);
 			}
 		};
 
-		graph.$connector.updateEdgesSize = function(newSize) {
-			const delta = newSize - graph.edges.length;
+		theTimeLine.$connector.updateEdgesSize = function(newSize) {
+			const delta = newSize - theTimeLine.edges.length;
 			if (delta > 0) {
-				graph.edges.length = newSize;
+				theTimeLine.edges.length = newSize;
 
-				// graph.notifySplices("edges", [{index: newSize - delta,
-				// removed: [], addedCount : delta, object: graph.edges, type:
+				// theTimeLine.notifySplices("edges", [{index: newSize - delta,
+				// removed: [], addedCount : delta, object: theTimeLine.edges, type:
 				// "splice"}]);
 			} else if (delta < 0) {
-				const removed = graph.edges.slice(newSize, graph.edges.length);
-				graph.edges.splice(newSize);
-				// graph.notifySplices("edges", [{index: newSize, removed:
-				// removed, addedCount : 0, object: graph.edges, type:
+				const removed = theTimeLine.edges.slice(newSize, theTimeLine.edges.length);
+				theTimeLine.edges.splice(newSize);
+				// theTimeLine.notifySplices("edges", [{index: newSize, removed:
+				// removed, addedCount : 0, object: theTimeLine.edges, type:
 				// "splice"}]);
 			}
 		};
