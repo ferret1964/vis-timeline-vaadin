@@ -15,7 +15,7 @@ Comming soon   (!)[example](doc/simpleexample.png)
 - Supports **NPM** mode on Vaadin 23+
   
 ### vis-timeline documentation:
-[https://visjs.github.io/vis-timeline/docs/timeline/(https://visjs.github.io/vis-timeline/docs/timeline/)
+[https://visjs.github.io/vis-timeline/docs/timeline/](https://visjs.github.io/vis-timeline/docs/timeline/)
 ### vis-timeline examples:
 [https://visjs.github.io/vis-timeline/examples/timeline/](https://visjs.github.io/vis-timeline/examples/timeline/) 
 (Not everything is possible with this addon)

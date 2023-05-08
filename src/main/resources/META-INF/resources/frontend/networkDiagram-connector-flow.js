@@ -1,5 +1,5 @@
 window.Vaadin.Flow.timelineDiagramConnector = {
-	initLazy : function(graph, initialNodes, initialEdges, options) {
+	initLazy : function(graph, initialDataSet, options) {
 
 		// Check whether the connector was already initialized for the Iron list
 		if (graph.$connector) {
@@ -9,10 +9,9 @@ window.Vaadin.Flow.timelineDiagramConnector = {
 
 		graph.$connector = {};
 
-		console.log(initialNodes);
-		graph.nodes = new vis.DataSet(JSON.parse(initialNodes));
-		graph.edges = new vis.DataSet(JSON.parse(initialEdges));
-		
+		console.log(initDataSet);
+		graph.nodes = new vis.DataSet(JSON.parse(initialDataSet));
+
 
 		var self = this;
 		var customNodeifAdded = false;
