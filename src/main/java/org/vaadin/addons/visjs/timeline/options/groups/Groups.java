@@ -1,2 +1,4 @@
-package org.vaadin.addons.visjs.timeline.options;public class Groups {
+package org.vaadin.addons.visjs.timeline.options.groups;
+
+public class Groups {
 }
