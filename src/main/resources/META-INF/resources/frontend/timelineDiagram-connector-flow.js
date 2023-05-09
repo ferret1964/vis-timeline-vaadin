@@ -5,13 +5,13 @@ window.Vaadin.Flow.timelineDiagramConnector = {
 		if (theTimeLine.$connector) {
 			return;
 		}
-		console.log('init networkDiagramConnector');
+		console.log('init timelineDiagramConnector');
 
 		theTimeLine.$connector = {};
 
 		console.log(initDataSet);
 		theTimeLine.items = new vis.itemsSet(JSON.parse(initialDataSet));
-		theTimeLine.groups = new vis.itemsSet(JSON.parse(initialGroups));
+		theTimeLine.groups = new vis.groupsSet(JSON.parse(initialGroups));
 
 
 		var self = this;

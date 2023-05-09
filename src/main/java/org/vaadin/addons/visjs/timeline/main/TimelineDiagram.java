@@ -164,7 +164,7 @@ public class TimelineDiagram extends Component implements HasSize {
         .orElseThrow(() -> new IllegalStateException(
             "Connector can only be initialized for an attached NetworkDiagram"))
         .getPage()
-        .executeJs("window.Vaadin.Flow.networkDiagramConnector.initLazy($0, $1, $2, $3)",
+        .executeJs("window.Vaadin.Flow.timelinekDiagramConnector.initLazy($0, $1, $2, $3)",
             getElement(), nodesArray, edgesArray, optionsToJson(options));
 
     // TODO reinitialise listener
