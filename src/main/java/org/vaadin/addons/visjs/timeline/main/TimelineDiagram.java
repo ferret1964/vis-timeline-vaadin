@@ -87,7 +87,7 @@ import org.vaadin.addons.visjs.timeline.listener.StabilizedListener;
 import org.vaadin.addons.visjs.timeline.listener.StabilizingProgressListener;
 import org.vaadin.addons.visjs.timeline.listener.StartStabilizingListener;
 import org.vaadin.addons.visjs.timeline.listener.ZoomListener;
-import org.vaadin.addons.visjs.timeline.options.Manipulation;
+import org.vaadin.addons.visjs.timeline.options.Editable;
 import org.vaadin.addons.visjs.timeline.options.Options;
 import org.vaadin.addons.visjs.timeline.util.PairCollater;
 import elemental.json.JsonArray;
@@ -134,7 +134,7 @@ public class TimelineDiagram extends Component implements HasSize {
     // mapper.getFactory().configure(JsonGenerator, true);
     this.options = Objects.requireNonNull(options);
     if (options.getManipulation() == null) {
-      options.setManipulation(new Manipulation());
+      options.setManipulation(new Editable());
     }
     this.setWidth(options.getWidth());
     this.setHeight(options.getHeight());

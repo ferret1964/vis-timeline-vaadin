@@ -3,7 +3,7 @@ package org.vaadin.addons.visjs.timeline.options;
 /**
  * Created by trobar 4.8.2017
  */
-public class Manipulation {
+public class Editable {
 
   private boolean enabled = false;
   // All other fields are callback functions -> refer to NetworkDiagram
