@@ -133,9 +133,9 @@ public class TimelineDiagram extends Component implements HasSize {
     mapper.configure(JsonWriteFeature.ESCAPE_NON_ASCII.mappedFeature(), true);
     // mapper.getFactory().configure(JsonGenerator, true);
     this.options = Objects.requireNonNull(options);
-    if (options.getManipulation() == null) {
-      options.setManipulation(new Editable());
-    }
+    //if (options.getManipulation() == null) {
+    //   options.setManipulation(new Editable());
+    // }
     this.setWidth(options.getWidth());
     this.setHeight(options.getHeight());
   }

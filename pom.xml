@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.vaadin.addons.visjs.timeline</groupId>
-    <artifactId>vis-network-vaadin</artifactId>
+    <artifactId>vis-timeline-vaadin</artifactId>
     <version>0.0.1</version>
     <name>vis-timeline-vaadin</name>
     <description>Integration of vis-timelinefor Vaadin platform</description>
