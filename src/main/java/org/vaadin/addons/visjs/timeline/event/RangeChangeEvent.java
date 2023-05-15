@@ -7,9 +7,9 @@ import elemental.json.JsonObject;
 import org.vaadin.addons.visjs.timeline.api.Event;
 
 @DomEvent("vaadin-ratechange")
-public class RateChangeEvent extends Event {
-        RateChangeEvent(final org.vaadin.addons.visjs.timeline.main.TimelineDiagram source, boolean fromClient,
-                        @EventData("event.detail") final JsonObject params)
+public class RangeChangeEvent extends Event {
+        RangeChangeEvent(final org.vaadin.addons.visjs.timeline.main.TimelineDiagram source, boolean fromClient,
+                         @EventData("event.detail") final JsonObject params)
                 throws JsonException {
             super(source, fromClient, params);
         }

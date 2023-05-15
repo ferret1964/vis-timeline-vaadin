@@ -334,6 +334,10 @@ public class TimelineDiagram extends Component implements HasSize {
     });
   }
 
+  public Registration addChangeListener(final ChangedListener listener) {
+    enableEventDispatching(ChangedEvent.class);
+    return addListener(ChangedEvent.class, listener);
+  }
   public Registration addClickListener(final ClickListener listener) {
     enableEventDispatching(ClickEvent.class);
     return addListener(ClickEvent.class, listener);
@@ -363,6 +367,63 @@ public class TimelineDiagram extends Component implements HasSize {
     enableEventDispatching(DropEvent.class);
     return addListener(DropEvent.class, listener);
   }
+
+  public Registration addGroupDraggedListener(final GroupDraggedListener listener) {
+    enableEventDispatching(GroupDraggedEvent.class);
+    return addListener(GroupDraggedEvent.class, listener);
+  }
+
+
+  public Registration addItemOverListener(final ItemOverListener listener) {
+    enableEventDispatching(ItemOverEvent.class);
+    return addListener(ItemOverEvent.class, listener);
+  }
+
+  public Registration addMarkerChangeListener(final MarkerChangeListener listener) {
+    enableEventDispatching(MarkerChangeEvent.class);
+    return addListener(MarkerChangeEvent.class, listener);
+  }
+
+  public Registration addMouseDownListener(final MouseDownListener listener) {
+    enableEventDispatching(MouseDownEvent.class);
+    return addListener(MouseDownEvent.class, listener);
+  }
+
+  public Registration addMouseMoveListener(final MouseMoveListener listener) {
+    enableEventDispatching(MouseMoveEvent.class);
+    return addListener(MouseMoveEvent.class, listener);
+  }
+
+  public Registration addMouseOverListener(final MouseOverListener listener) {
+    enableEventDispatching(MouseOverEvent.class);
+    return addListener(MouseOverEvent.class, listener);
+  }
+
+  public Registration addMouseUpListener(final MouseUpListener listener) {
+    enableEventDispatching(MouseUpEvent.class);
+    return addListener(MouseUpEvent.class, listener);
+  }
+
+  public Registration addRangeChangedistener(final RangeChangedListener listener) {
+    enableEventDispatching(RangeChangedEvent.class);
+    return addListener(RangeChangedEvent.class, listener);
+  }
+
+  public Registration addRangeChangeListener(final RangeChangeListener listener) {
+    enableEventDispatching(RangeChangeEvent.class);
+    return addListener(RangeChangeEvent.class, listener);
+  }
+
+  public Registration addTimeChangedListener(final TimeChangedListener listener) {
+    enableEventDispatching(TimeChangedEvent.class);
+    return addListener(TimeChangedEvent.class, listener);
+  }
+
+  public Registration addGroupDraggedListener(final TimeChangeListener listener) {
+    enableEventDispatching(TimeChangeEvent.class);
+    return addListener(TimeChangeEvent.class, listener);
+  }
+
   public Registration addSelectListener(final SelectListener listener) {
     enableEventDispatching(SelectEvent.class);
     return addListener(SelectEvent.class, listener);
@@ -370,10 +431,6 @@ public class TimelineDiagram extends Component implements HasSize {
 
 
 
-  public Registration addChangeListener(final ChangedListener listener) {
-    enableEventDispatching(ChangedEvent.class);
-    return addListener(ChangedEvent.class, listener);
-  }
 
   private static class TimelineDiagramRegistration implements Registration {
     private boolean isInvoked;
