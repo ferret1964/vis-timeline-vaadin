@@ -27,69 +27,10 @@ import com.vaadin.flow.internal.JsonUtils;
 import com.vaadin.flow.shared.Registration;
 
 import org.vaadin.addons.visjs.timeline.api.Event;
-import org.vaadin.addons.visjs.timeline.event.AfterDrawingEvent;
-import org.vaadin.addons.visjs.timeline.event.AnimationFinshedEvent;
-import org.vaadin.addons.visjs.timeline.event.BeforeDrawingEvent;
-import org.vaadin.addons.visjs.timeline.event.BlurEdgeEvent;
-import org.vaadin.addons.visjs.timeline.event.BlurNodeEvent;
-import org.vaadin.addons.visjs.timeline.event.ClickEvent;
-import org.vaadin.addons.visjs.timeline.event.ConfigChangeEvent;
-import org.vaadin.addons.visjs.timeline.event.DeselectEdgeEvent;
-import org.vaadin.addons.visjs.timeline.event.DeselectNodeEvent;
-import org.vaadin.addons.visjs.timeline.event.DoubleClickEvent;
-import org.vaadin.addons.visjs.timeline.event.DragEndEvent;
-import org.vaadin.addons.visjs.timeline.event.DragStartEvent;
-import org.vaadin.addons.visjs.timeline.event.DraggingEvent;
-import org.vaadin.addons.visjs.timeline.event.HidePopupEvent;
-import org.vaadin.addons.visjs.timeline.event.HoldEvent;
-import org.vaadin.addons.visjs.timeline.event.HoverEdgeEvent;
-import org.vaadin.addons.visjs.timeline.event.HoverNodeEvent;
-import org.vaadin.addons.visjs.timeline.event.InitRedrawEvent;
-import org.vaadin.addons.visjs.timeline.event.OnContextEvent;
-import org.vaadin.addons.visjs.timeline.event.ReleaseEvent;
-import org.vaadin.addons.visjs.timeline.event.ResizeEvent;
-import org.vaadin.addons.visjs.timeline.event.SelectEdgeEvent;
-import org.vaadin.addons.visjs.timeline.event.SelectEvent;
-import org.vaadin.addons.visjs.timeline.event.SelectNodeEvent;
-import org.vaadin.addons.visjs.timeline.event.ShowPopupEvent;
-import org.vaadin.addons.visjs.timeline.event.StabilizationIterationsDoneEvent;
-import org.vaadin.addons.visjs.timeline.event.StabilizationProgressEvent;
-import org.vaadin.addons.visjs.timeline.event.StabilizedEvent;
-import org.vaadin.addons.visjs.timeline.event.StartStabilizingEvent;
-import org.vaadin.addons.visjs.timeline.event.ZoomEvent;
-import org.vaadin.addons.visjs.timeline.listener.AfterDrawingListener;
-import org.vaadin.addons.visjs.timeline.listener.AnimationFinishedListener;
-import org.vaadin.addons.visjs.timeline.listener.BeforeDrawingListener;
-import org.vaadin.addons.visjs.timeline.listener.BlurEdgeListener;
-import org.vaadin.addons.visjs.timeline.listener.BlurNodeListener;
-import org.vaadin.addons.visjs.timeline.listener.ClickListener;
-import org.vaadin.addons.visjs.timeline.listener.ConfigChangeListener;
-import org.vaadin.addons.visjs.timeline.listener.DeselectEdgeListener;
-import org.vaadin.addons.visjs.timeline.listener.DeselectNodeListener;
-import org.vaadin.addons.visjs.timeline.listener.DoubleClickListener;
-import org.vaadin.addons.visjs.timeline.listener.DragEndListener;
-import org.vaadin.addons.visjs.timeline.listener.DragStartListener;
-import org.vaadin.addons.visjs.timeline.listener.DraggingListener;
-import org.vaadin.addons.visjs.timeline.listener.HidePopupListener;
-import org.vaadin.addons.visjs.timeline.listener.HoldListener;
-import org.vaadin.addons.visjs.timeline.listener.HoverEdgeListener;
-import org.vaadin.addons.visjs.timeline.listener.HoverNodeListener;
-import org.vaadin.addons.visjs.timeline.listener.InitRedrawListener;
-import org.vaadin.addons.visjs.timeline.listener.OnContextListener;
-import org.vaadin.addons.visjs.timeline.listener.ReleaseListener;
-import org.vaadin.addons.visjs.timeline.listener.ResizeListener;
-import org.vaadin.addons.visjs.timeline.listener.SelectEdgeListener;
-import org.vaadin.addons.visjs.timeline.listener.SelectListener;
-import org.vaadin.addons.visjs.timeline.listener.SelectNodeListener;
-import org.vaadin.addons.visjs.timeline.listener.ShowPopupListener;
-import org.vaadin.addons.visjs.timeline.listener.StabilizationIterationsDoneListener;
-import org.vaadin.addons.visjs.timeline.listener.StabilizedListener;
-import org.vaadin.addons.visjs.timeline.listener.StabilizingProgressListener;
-import org.vaadin.addons.visjs.timeline.listener.StartStabilizingListener;
-import org.vaadin.addons.visjs.timeline.listener.ZoomListener;
-import org.vaadin.addons.visjs.timeline.options.Editable;
+import org.vaadin.addons.visjs.timeline.event.*;
+import org.vaadin.addons.visjs.timeline.listener.*;
 import org.vaadin.addons.visjs.timeline.options.Options;
-import org.vaadin.addons.visjs.timeline.util.PairCollater;
+import org.vaadin.addons.visjs.timeline.options.groups.Groups;
 import elemental.json.JsonArray;
 import elemental.json.impl.JreJsonString;
 import com.vaadin.flow.component.dependency.JsModule;
@@ -115,11 +56,11 @@ public class TimelineDiagram extends Component implements HasSize {
   // Holds all eventtypes already registered client side.
   private final Set<Class<? extends Event>> enabledEvents = new LinkedHashSet<>();
 
-  private DataProvider<Edge, ?> edgesDataProvider = DataProvider.ofItems();
-  private DataProvider<Node, ?> nodesDataProvider = DataProvider.ofItems();
+  private DataProvider<Groups, ?> groupsDataProvider = DataProvider.ofItems();
+  private DataProvider<Item, ?> itemsDataProvider = DataProvider.ofItems();
 
-  private Registration edgeDataProviderListenerRegistration;
-  private Registration nodeDataProviderListenerRegistration;
+  private Registration itemsDataProviderListenerRegistration;
+  private Registration groupsDataProviderListenerRegistration;
 
   public TimelineDiagram(final Options options) {
     super();
@@ -141,17 +82,17 @@ public class TimelineDiagram extends Component implements HasSize {
   }
 
   private void initConnector() {
-    String nodesArray = "[]";
+    String itemArray = "[]";
     try {
-      nodesArray = mapper.writeValueAsString(
-          getNodesDataProvider().fetch(new Query<>()).collect(Collectors.toSet()));
+      itemArray = mapper.writeValueAsString(
+          getItemsDataProviderDataProvider().fetch(new Query<>()).collect(Collectors.toSet()));
     } catch (final JsonProcessingException e) {
       e.printStackTrace();
     }
-    String edgesArray = "[]";
+    String groupsArray = "[]";
     try {
-      edgesArray = mapper.writeValueAsString(
-          getEdgesDataProvider().fetch(new Query<>()).collect(Collectors.toSet()));
+      groupsArray = mapper.writeValueAsString(
+          getGroupsDataProvider().fetch(new Query<>()).collect(Collectors.toSet()));
     } catch (final JsonProcessingException e) {
       e.printStackTrace();
     }
@@ -165,21 +106,8 @@ public class TimelineDiagram extends Component implements HasSize {
             "Connector can only be initialized for an attached NetworkDiagram"))
         .getPage()
         .executeJs("window.Vaadin.Flow.timelinekDiagramConnector.initLazy($0, $1, $2, $3)",
-            getElement(), nodesArray, edgesArray, optionsToJson(options));
+            getElement(), itemArray, groupsArray, optionsToJson(options));
 
-    // TODO reinitialise listener
-    // getEventBus().hasListener(eventType)
-    this.addSelectNodeListener(selectNodeEvent -> {
-      JsonArray s = selectNodeEvent.getParams().getArray("nodes");
-      for (int i = 0; i< s.length(); i++) {
-        selections.add(s.get(i).asString());
-      }
-    });
-    this.addDeselectNodeListener(deselectNodeEvent -> {
-      JsonArray s = deselectNodeEvent.getParams().getObject("previousSelection").getArray("nodes");
-      for (int i = 0; i< s.length(); i++) {
-        selections.add(s.get(i).asString());
-      }});
 
   }
 
@@ -228,103 +156,83 @@ public class TimelineDiagram extends Component implements HasSize {
   /**
    * Creates a ListDataProvider with the given items.
    *
-   * @param nodes
+   * @param items
    */
-  public void setNodes(Collection<Node> nodes) {
-    setNodesDataProvider(new ListDataProvider<>(nodes));
+
+  public void setItems(Collection<Item> items) {
+    setItemsDataProvider(new ListDataProvider<>(items));
+  }
+
+
+  /**
+   * Creates a ListDataProvider with the given items.
+   *
+   * @param items
+   */
+
+  public void setItems(Item... items) {
+    setItemsDataProvider(new ListDataProvider<>(Arrays.asList(items)));
   }
 
   /**
    * Creates a ListDataProvider with the given items.
    *
-   * @param nodes
+   * @param groups
    */
-  public void setNodes(Node... nodes) {
-    setNodesDataProvider(new ListDataProvider<>(Arrays.asList(nodes)));
+  public void setGroups(Collection<Groups> groups) {
+    setGroupsDataProvider(new ListDataProvider<>(groups));
   }
+
+
 
   /**
-   * Creates a ListDataProvider with the given items.
+   * Creates a ListDataProvider with the given groups.
    *
-   * @param edges
+   * @param groups
    */
-  public void setEdges(Collection<Edge> edges) {
-    setEdgesDataProvider(new ListDataProvider<>(edges));
+  public void setGroups(Groups... groups) {
+    setGroupsDataProvider(new ListDataProvider<>(Arrays.asList(groups)));
   }
 
-  /**
-   * Creates Edges in ListDataProvider with given ids. edgesIds are interpreted as pairs of fromId
-   * and toId. Therefore count has to be even. <br>
-   * e.g. setEdges("1","2","2","3") creates new Edge("1", "2") and new Edge("2", "3");
-   *
-   * @param edgesIds
-   */
-  public void setEdges(String... edgesIds) {
-    if (!(edgesIds.length % 2 == 0)) {
-      throw new IllegalArgumentException("number of arguments has to be even");
-    }
-    final Set<Edge> edges = Arrays.stream(edgesIds).sequential().flatMap(new PairCollater<>())
-        .map(pair -> new Edge(pair.getLeft(), pair.getRight())).collect(Collectors.toSet());
-    this.setEdges(edges);
-  }
-  public void addEdges(String... edgesIds) {
-    if (!(edgesIds.length % 2 == 0)) {
-      throw new IllegalArgumentException("number of arguments has to be even");
-    }
-    final Set<Edge> edges = Arrays.stream(edgesIds).sequential().flatMap(new PairCollater<>())
-            .map(pair -> new Edge(pair.getLeft(), pair.getRight())).collect(Collectors.toSet());
-    this.setEdges(edges);
-  }
+   private void addItems(Iterable<Item> items) {
+     addItems(StreamSupport.stream(items.spliterator(), false).toArray(Item[]::new));
+   }
 
-  /**
-   * Creates a ListDataProvider with the given items.
-   *
-   * @param edges
-   */
-  public void setEdges(Edge... edges) {
-    setEdgesDataProvider(new ListDataProvider<>(Arrays.asList(edges)));
-  }
+   private void addItems(final Item... item) {
+     runBeforeClientResponse(ui -> {
+       try {
+         getElement().callJsFunction("$connector.addItems", mapper.writeValueAsString(item));
+       } catch (final JsonProcessingException e) {
+         e.printStackTrace();
+       }
+     });
+   }
 
-  private void addNodes(Iterable<Node> nodes) {
-    addNodes(StreamSupport.stream(nodes.spliterator(), false).toArray(Node[]::new));
-  }
+   public void addGroups(Iterable<Groups> groups) {
+     addGroups(StreamSupport.stream(groups.spliterator(), false).toArray(Groups[]::new));
+   }
 
-  private void addNodes(final Node... node) {
-    runBeforeClientResponse(ui -> {
-      try {
-        getElement().callJsFunction("$connector.addNodes", mapper.writeValueAsString(node));
-      } catch (final JsonProcessingException e) {
-        e.printStackTrace();
-      }
-    });
-  }
+   private void addGroups(final Groups... groups) {
+     runBeforeClientResponse(ui -> {
+       try {
+         getElement().callJsFunction("$connector.addGroups", mapper.writeValueAsString(groups));
+       } catch (final JsonProcessingException e) {
+         e.printStackTrace();
+       }
+     });
+   }
 
-  public void addEdges(Iterable<Edge> edges) {
-    addEdges(StreamSupport.stream(edges.spliterator(), false).toArray(Edge[]::new));
-  }
+   private void removeAllItems() {
+     runBeforeClientResponse(ui -> {
+       getElement().callJsFunction("$connector.clearItems");
+     });
+   }
 
-  private void addEdges(final Edge... edge) {
-    runBeforeClientResponse(ui -> {
-      try {
-        getElement().callJsFunction("$connector.addEdges", mapper.writeValueAsString(edge));
-      } catch (final JsonProcessingException e) {
-        e.printStackTrace();
-      }
-    });
-  }
-
-  private void removeAllEdges() {
-    runBeforeClientResponse(ui -> {
-      getElement().callJsFunction("$connector.clearEdges");
-    });
-  }
-
-  private void removeAllNodes() {
-    runBeforeClientResponse(ui -> {
-      getElement().callJsFunction("$connector.clearNodes");
-    });
-  }
-
+   private void removeAllGroups() {
+     runBeforeClientResponse(ui -> {
+       getElement().callJsFunction("$connector.clearGroups");
+     });
+   }
   public Set<String> getSelections() {
     return selections;
   }
@@ -333,8 +241,8 @@ public class TimelineDiagram extends Component implements HasSize {
    *
    * @return the data provider of this diagram, not {@code null}
    */
-  public DataProvider<Edge, ?> getEdgesDataProvider() {
-    return edgesDataProvider;
+  public DataProvider<Groups, ?> getGroupsDataProvider() {
+    return groupsDataProvider;
   }
 
   /**
@@ -342,37 +250,37 @@ public class TimelineDiagram extends Component implements HasSize {
    *
    * @return the data provider of this diagram, not {@code null}
    */
-  public DataProvider<Node, ?> getNodesDataProvider() {
-    return nodesDataProvider;
+  public DataProvider<Item, ?> getItemsDataProviderDataProvider() {
+    return itemsDataProvider;
   }
 
-  public void setEdgesDataProvider(DataProvider<Edge, ?> dataProvider) {
+  public void setGroupsDataProvider(DataProvider<Groups, ?> dataProvider) {
     Objects.requireNonNull(dataProvider, "The dataProvider cannot be null");
-    this.edgesDataProvider = dataProvider;
+    this.groupsDataProvider = dataProvider;
     reset();
-    if (edgeDataProviderListenerRegistration != null) {
-      edgeDataProviderListenerRegistration.remove();
+    if (groupsDataProviderListenerRegistration != null) {
+      groupsDataProviderListenerRegistration.remove();
     }
-    edgeDataProviderListenerRegistration = dataProvider.addDataProviderListener(e -> reset());
+    groupsDataProviderListenerRegistration = dataProvider.addDataProviderListener(e -> reset());
   }
 
-  public void setNodesDataProvider(DataProvider<Node, ?> dataProvider) {
+  public void setItemsDataProvider(DataProvider<Item, ?> dataProvider) {
     Objects.requireNonNull(dataProvider, "The dataProvider cannot be null");
-    this.nodesDataProvider = dataProvider;
+    this.itemsDataProvider = dataProvider;
     reset();
-    if (nodeDataProviderListenerRegistration != null) {
-      nodeDataProviderListenerRegistration.remove();
+    if (itemsDataProviderListenerRegistration != null) {
+      itemsDataProviderListenerRegistration.remove();
     }
-    nodeDataProviderListenerRegistration = dataProvider.addDataProviderListener(e -> reset());
+    itemsDataProviderListenerRegistration = dataProvider.addDataProviderListener(e -> reset());
   }
 
   private void reset() {
-    final Set<Node> nodes = nodesDataProvider.fetch(new Query<>()).collect(Collectors.toSet());
-    final Set<Edge> edges = edgesDataProvider.fetch(new Query<>()).collect(Collectors.toSet());
-    removeAllNodes();
-    removeAllEdges();
-    addNodes(nodes);
-    addEdges(edges);
+    final Set<Item> items = itemsDataProvider.fetch(new Query<>()).collect(Collectors.toSet());
+    final Set<Groups> groups = groupsDataProvider.fetch(new Query<>()).collect(Collectors.toSet());
+    removeAllItems();
+    removeAllGroups();
+    addItems(items);
+    addGroups(groups);
   }
 
   // ==== Diagram-Methods ====
@@ -387,19 +295,13 @@ public class TimelineDiagram extends Component implements HasSize {
         ui -> getElement().callJsFunction("$connector.diagram.setSize", width, height));
   }
 
-  public void diagramSelectNodes(Iterable<String> nodeIds) {
-    final JsonArray nodeIdArray = StreamSupport.stream(nodeIds.spliterator(), false)
+  public void diagramSelectItems(Iterable<String> itemIds) {
+    final JsonArray nodeIdArray = StreamSupport.stream(itemIds.spliterator(), false)
         .map(JreJsonString::new).collect(JsonUtils.asArray());
     runBeforeClientResponse(
-        ui -> getElement().callJsFunction("$connector.diagram.selectNodes", nodeIdArray));
+        ui -> getElement().callJsFunction("$connector.diagram.selectItems", nodeIdArray));
   }
 
-  public void diagramSelectEdges(Iterable<String> edgeIds) {
-    final JsonArray edgeIdArray = StreamSupport.stream(edgeIds.spliterator(), false)
-        .map(JreJsonString::new).collect(JsonUtils.asArray());
-    runBeforeClientResponse(
-        ui -> getElement().callJsFunction("$connector.diagram.selectEdges", edgeIdArray));
-  }
 
   public void diagramUnselectAll() {
     runBeforeClientResponse(ui -> getElement().callJsFunction("$connector.diagram.unselectAll"));
@@ -434,9 +336,17 @@ public class TimelineDiagram extends Component implements HasSize {
 
   public Registration addClickListener(final ClickListener listener) {
     enableEventDispatching(ClickEvent.class);
-    return new NetworkDiagramRegistration(addListener(ClickEvent.class, listener), event -> {
-      // Should disable event dispatching here but only if this is last event of this type.
-    });
+    return addListener(ClickEvent.class, listener);
+  }
+
+  public Registration addCurrentTimeTickListener(final CurrentTimeTickListener listener) {
+    enableEventDispatching(CurrentTimeTickEvent.class);
+    return addListener(CurrentTimeTickEvent.class, listener);
+  }
+
+  public Registration addContextMenuListener(final ContextMenuListener listener) {
+    enableEventDispatching(ContextMenuEvent.class);
+    return addListener(ContextMenuEvent.class, listener);
   }
 
   public Registration addDoubleClickListener(final DoubleClickListener listener) {
@@ -444,156 +354,36 @@ public class TimelineDiagram extends Component implements HasSize {
     return addListener(DoubleClickEvent.class, listener);
   }
 
-  public Registration addOnContextListener(final OnContextListener listener) {
-    enableEventDispatching(OnContextEvent.class);
-    return addListener(OnContextEvent.class, listener);
+  public Registration addDragOverListener(final DragOverListener listener) {
+    enableEventDispatching(DragOverEvent.class);
+    return addListener(DragOverEvent.class, listener);
   }
 
-  public Registration addHoldListener(final HoldListener listener) {
-    enableEventDispatching(HoldEvent.class);
-    return addListener(HoldEvent.class, listener);
+  public Registration addDropListener(final DropListener listener) {
+    enableEventDispatching(DropEvent.class);
+    return addListener(DropEvent.class, listener);
   }
-
-  public Registration addReleaseListener(final ReleaseListener listener) {
-    enableEventDispatching(ReleaseEvent.class);
-    return addListener(ReleaseEvent.class, listener);
-  }
-
   public Registration addSelectListener(final SelectListener listener) {
     enableEventDispatching(SelectEvent.class);
     return addListener(SelectEvent.class, listener);
   }
 
-  public Registration addSelectNodeListener(final SelectNodeListener listener) {
-    enableEventDispatching(SelectNodeEvent.class);
-    return addListener(SelectNodeEvent.class, listener);
+
+
+  public Registration addChangeListener(final ChangedListener listener) {
+    enableEventDispatching(ChangedEvent.class);
+    return addListener(ChangedEvent.class, listener);
   }
 
-  public Registration addSelectEdgeListener(final SelectEdgeListener listener) {
-    enableEventDispatching(SelectEdgeEvent.class);
-    return addListener(SelectEdgeEvent.class, listener);
-  }
-
-  public Registration addDeselectNodeListener(final DeselectNodeListener listener) {
-    enableEventDispatching(DeselectNodeEvent.class);
-    return addListener(DeselectNodeEvent.class, listener);
-  }
-
-  public Registration addDeselectEdgeListener(final DeselectEdgeListener listener) {
-    enableEventDispatching(DeselectEdgeEvent.class);
-    return addListener(DeselectEdgeEvent.class, listener);
-  }
-
-  public Registration addDragStartListener(final DragStartListener listener) {
-    enableEventDispatching(DragStartEvent.class);
-    return addListener(DragStartEvent.class, listener);
-  }
-
-  public Registration addDraggingListener(final DraggingListener listener) {
-    enableEventDispatching(DraggingEvent.class);
-    return addListener(DraggingEvent.class, listener);
-  }
-
-  public Registration addDragEndListener(final DragEndListener listener) {
-    enableEventDispatching(DragEndEvent.class);
-    return addListener(DragEndEvent.class, listener);
-  }
-
-  public Registration addHoverNodeListener(final HoverNodeListener listener) {
-    enableEventDispatching(HoverNodeEvent.class);
-    return addListener(HoverNodeEvent.class, listener);
-  }
-
-  public Registration addBlurNodeListener(final BlurNodeListener listener) {
-    enableEventDispatching(BlurNodeEvent.class);
-    return addListener(BlurNodeEvent.class, listener);
-  }
-
-  public Registration addHoverEdgeListener(final HoverEdgeListener listener) {
-    enableEventDispatching(HoverEdgeEvent.class);
-    return addListener(HoverEdgeEvent.class, listener);
-  }
-
-  public Registration addBlurEdgeListener(final BlurEdgeListener listener) {
-    enableEventDispatching(BlurEdgeEvent.class);
-    return addListener(BlurEdgeEvent.class, listener);
-  }
-
-  public Registration addZoomListener(final ZoomListener listener) {
-    enableEventDispatching(ZoomEvent.class);
-    return addListener(ZoomEvent.class, listener);
-  }
-
-  public Registration addShowPopupListener(final ShowPopupListener listener) {
-    enableEventDispatching(ShowPopupEvent.class);
-    return addListener(ShowPopupEvent.class, listener);
-  }
-
-  public Registration addHidePopupListener(final HidePopupListener listener) {
-    enableEventDispatching(HidePopupEvent.class);
-    return addListener(HidePopupEvent.class, listener);
-  }
-
-  public Registration addStartStabilizingListener(final StartStabilizingListener listener) {
-    enableEventDispatching(StartStabilizingEvent.class);
-    return addListener(StartStabilizingEvent.class, listener);
-  }
-
-  public Registration addStabilizationProgressListener(final StabilizingProgressListener listener) {
-    enableEventDispatching(StabilizationProgressEvent.class);
-    return addListener(StabilizationProgressEvent.class, listener);
-  }
-
-  public Registration addStabilizationIterationsDoneListener(
-      final StabilizationIterationsDoneListener listener) {
-    enableEventDispatching(StabilizationIterationsDoneEvent.class);
-    return addListener(StabilizationIterationsDoneEvent.class, listener);
-  }
-
-  public Registration addStabilizedListener(final StabilizedListener listener) {
-    enableEventDispatching(StabilizedEvent.class);
-    return addListener(StabilizedEvent.class, listener);
-  }
-
-  public Registration addResizeListener(final ResizeListener listener) {
-    enableEventDispatching(ResizeEvent.class);
-    return addListener(ResizeEvent.class, listener);
-  }
-
-  public Registration addInitRedrawListener(final InitRedrawListener listener) {
-    enableEventDispatching(InitRedrawEvent.class);
-    return addListener(InitRedrawEvent.class, listener);
-  }
-
-  public Registration addBeforeDrawingListener(final BeforeDrawingListener listener) {
-    enableEventDispatching(BeforeDrawingEvent.class);
-    return addListener(BeforeDrawingEvent.class, listener);
-  }
-
-  public Registration addAfterDrawingListener(final AfterDrawingListener listener) {
-    enableEventDispatching(AfterDrawingEvent.class);
-    return addListener(AfterDrawingEvent.class, listener);
-  }
-
-  public Registration addAnimationFinishedListener(final AnimationFinishedListener listener) {
-    enableEventDispatching(AnimationFinshedEvent.class);
-    return addListener(AnimationFinshedEvent.class, listener);
-  }
-
-  public Registration addConfigChangeListener(final ConfigChangeListener listener) {
-    enableEventDispatching(ConfigChangeEvent.class);
-    return addListener(ConfigChangeEvent.class, listener);
-  }
-
-  private static class NetworkDiagramRegistration implements Registration {
+  private static class TimelineDiagramRegistration implements Registration {
     private boolean isInvoked;
 
     private final Registration origin;
 
-    private final SerializableConsumer<NetworkDiagramRegistration> callback;
+    private final SerializableConsumer<TimelineDiagramRegistration> callback;
 
-    private NetworkDiagramRegistration(Registration origin,
-        SerializableConsumer<NetworkDiagramRegistration> onRemoveCallback) {
+    private TimelineDiagramRegistration(Registration origin,
+        SerializableConsumer<TimelineDiagramRegistration> onRemoveCallback) {
       this.origin = origin;
       this.callback = onRemoveCallback;
 

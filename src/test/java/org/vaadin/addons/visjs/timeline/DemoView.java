@@ -13,8 +13,8 @@ import com.vaadin.flow.data.provider.ListDataProvider;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.shared.Registration;
 
-import org.vaadin.addons.visjs.timeline.main.Edge;
-import org.vaadin.addons.visjs.timeline.main.Node;
+import org.vaadin.addons.visjs.timeline.options.groups.Groups;
+import org.vaadin.addons.visjs.timeline.main.Item;
 import org.vaadin.addons.visjs.timeline.options.Options;
 
 @SuppressWarnings("serial")
@@ -30,16 +30,16 @@ public class DemoView extends VerticalLayout {
     final org.vaadin.addons.visjs.timeline.main.TimelineDiagram nd =
         new org.vaadin.addons.visjs.timeline.main.TimelineDiagram(Options.builder().withWidth("600px").withHeight("400px").build());
 
-    final List<Node> nodes = new LinkedList<>();
+    final List<Item> items = new LinkedList<>();
     AtomicInteger idCounter = new AtomicInteger();
     for (int i=1 ; i <= 5 ; i++)
     {
       int nodeId = idCounter.incrementAndGet();
-      nodes.add(new Node(nodeId+"", "Node "+nodeId));
+      items.add(new Item(nodeId+"", "Items "+nodeId));
     }
-    final ListDataProvider<Node> dataProvider = new ListDataProvider<>(nodes);
-    nd.setNodesDataProvider(dataProvider);
-    nd.setEdges(new Edge("1", "3"), new Edge("1", "2"), new Edge("2", "4"), new Edge("2", "5"), new Edge("3", "3"));
+    final ListDataProvider<Item> dataProvider = new ListDataProvider<>(items);
+    nd.setItemsDataProvider(dataProvider);
+
     final Registration registrationSelect = nd.addSelectNodeListener(
             ls -> Notification.show("NodeId selected " + ls.getParams().getArray("nodes").toJson()));
     final Registration registrationDeselect =  nd.addDeselectNodeListener(
@@ -47,10 +47,10 @@ public class DemoView extends VerticalLayout {
     add(nd);
     add(new HorizontalLayout(new Button("Add Node", e -> {
       final String id = (idCounter.incrementAndGet())+"";
-      nodes.add(new Node(id, "Node "+id));
+      items.add(new Node(id, "Node "+id));
       dataProvider.refreshAll();
     }), new Button("remove all Nodes", e -> {
-      nodes.clear();
+      items.clear();
       dataProvider.refreshAll();
       registrationSelect.remove();
       registrationDeselect.remove();

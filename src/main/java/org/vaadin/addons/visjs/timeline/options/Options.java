@@ -1,21 +1,15 @@
 package org.vaadin.addons.visjs.timeline.options;
 
-import java.util.HashMap;
 import java.util.Map;
-import java.util.function.BooleanSupplier;
 
 import javax.annotation.Nonnull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import org.vaadin.addons.visjs.timeline.options.cluster.Cluster;
-import org.vaadin.addons.visjs.timeline.options.edges.Edges;
-import org.vaadin.addons.visjs.timeline.options.edges.Layout;
 import org.vaadin.addons.visjs.timeline.options.groups.GroupOrder;
 import org.vaadin.addons.visjs.timeline.options.groups.GroupOrderSwap;
 import org.vaadin.addons.visjs.timeline.options.groups.GroupTemplate;
-import org.vaadin.addons.visjs.timeline.options.nodes.Nodes;
-import org.vaadin.addons.visjs.timeline.options.physics.Physics;
 
 public class Options {
 

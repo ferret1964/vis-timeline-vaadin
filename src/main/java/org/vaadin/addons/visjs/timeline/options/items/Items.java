@@ -2,13 +2,8 @@ package org.vaadin.addons.visjs.timeline.options.items;
 
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import org.vaadin.addons.visjs.timeline.options.nodes.Icon;
-import org.vaadin.addons.visjs.timeline.options.nodes.NodeColor;
-import org.vaadin.addons.visjs.timeline.options.nodes.WidthConstraint;
-import org.vaadin.addons.visjs.timeline.util.*;
 
 import javax.annotation.Nonnull;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @JsonDeserialize(builder = Items.Builder.class)

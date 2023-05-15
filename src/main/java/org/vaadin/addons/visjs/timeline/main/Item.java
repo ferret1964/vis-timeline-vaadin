@@ -1,7 +1,6 @@
 package org.vaadin.addons.visjs.timeline.main;
 
 import org.vaadin.addons.visjs.timeline.options.items.Items;
-import org.vaadin.addons.visjs.timeline.options.nodes.Nodes;
 
 public class Item extends Items {
 
