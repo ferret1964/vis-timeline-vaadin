@@ -3,7 +3,7 @@
 
     <groupId>org.vaadin.addons.visjs.timeline</groupId>
     <artifactId>vis-timeline-vaadin</artifactId>
-    <version>0.0.1</version>
+    <version>1.0.1</version>
     <name>vis-timeline-vaadin</name>
     <description>Integration of vis-timelinefor Vaadin platform</description>
 

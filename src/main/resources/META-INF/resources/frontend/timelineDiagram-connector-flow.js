@@ -1,5 +1,5 @@
 window.Vaadin.Flow.timelineDiagramConnector = {
-	initLazy : function(theTimeLine, initialDataSet, initialGroups, options) {
+	initLazy : function(theTimeLine, initialNodes, initialEdges, options) {
 
 		// Check whether the connector was already initialized for the Iron list
 		if (theTimeLine.$connector) {
@@ -9,9 +9,8 @@ window.Vaadin.Flow.timelineDiagramConnector = {
 
 		theTimeLine.$connector = {};
 
-		console.log(initDataSet);
-		theTimeLine.items = new vis.itemsSet(JSON.parse(initialDataSet));
-		theTimeLine.groups = new vis.groupsSet(JSON.parse(initialGroups));
+		theTimeLine.items = new visTL.DataSet(JSON.parse(initialNodes));
+		theTimeLine.groups = new visTL.DataSet(JSON.parse(initialEdges));
 
 
 		var self = this;
@@ -57,9 +56,8 @@ window.Vaadin.Flow.timelineDiagramConnector = {
 			callback(edgeData);
 		};
 
-		console.log("networkdiagram options: " + JSON.stringify(theTimeLine.options));
 
-		theTimeLine.$connector.diagram = new vis.Timeline(theTimeLine, theTimeLine.items,
+		theTimeLine.$connector.diagram = new visTL.Timeline(theTimeLine, theTimeLine.items,
 			theTimeLine.groups, theTimeLine.options);
 
 		// Enable event dispatching to vaadin only for registered eventTypes to
