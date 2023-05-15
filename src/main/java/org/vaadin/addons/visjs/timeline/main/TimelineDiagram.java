@@ -41,9 +41,9 @@ import com.vaadin.flow.component.dependency.NpmPackage;
  */
 @SuppressWarnings("serial")
 @Tag("div")
-@JsModule("./vis-loader-new.ts")
+@JsModule("./timeline-loader-new.ts")
 @JsModule("./timelineDiagram-connector-flow.js")
-@JsModule("vis-timeline/standalone/umd/vis-timeline.min.js")
+@JsModule("vis-timeline/standalone/umd/vis-timeline-graph2d.min.js")
 @NpmPackage(value = "vis-timeline", version = "7.7.2")
 public class TimelineDiagram extends Component implements HasSize {
 
@@ -105,7 +105,7 @@ public class TimelineDiagram extends Component implements HasSize {
         .orElseThrow(() -> new IllegalStateException(
             "Connector can only be initialized for an attached NetworkDiagram"))
         .getPage()
-        .executeJs("window.Vaadin.Flow.timelinekDiagramConnector.initLazy($0, $1, $2, $3)",
+        .executeJs("window.Vaadin.Flow.timelineDiagramConnector.initLazy($0, $1, $2, $3)",
             getElement(), itemArray, groupsArray, optionsToJson(options));
 
 
