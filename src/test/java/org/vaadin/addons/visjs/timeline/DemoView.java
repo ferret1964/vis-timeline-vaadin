@@ -40,24 +40,24 @@ public class DemoView extends VerticalLayout {
     final ListDataProvider<Item> dataProvider = new ListDataProvider<>(items);
     nd.setItemsDataProvider(dataProvider);
 
-    final Registration registrationSelect = nd.addSelectNodeListener(
-            ls -> Notification.show("NodeId selected " + ls.getParams().getArray("nodes").toJson()));
-    final Registration registrationDeselect =  nd.addDeselectNodeListener(
-            ls -> Notification.show("NodeId deselected " + ls.getParams().getObject("previousSelection").getArray("nodes").toJson()));
+    //final Registration registrationSelect = nd.addSelectNodeListener(
+    //        ls -> Notification.show("NodeId selected " + ls.getParams().getArray("nodes").toJson()));
+    //final Registration registrationDeselect =  nd.addDeselectNodeListener(
+    //        ls -> Notification.show("NodeId deselected " + ls.getParams().getObject("previousSelection").getArray("nodes").toJson()));
     add(nd);
     add(new HorizontalLayout(new Button("Add Node", e -> {
       final String id = (idCounter.incrementAndGet())+"";
-      items.add(new Node(id, "Node "+id));
+     // items.add(new Node(id, "Node "+id));
       dataProvider.refreshAll();
     }), new Button("remove all Nodes", e -> {
       items.clear();
       dataProvider.refreshAll();
-      registrationSelect.remove();
-      registrationDeselect.remove();
+    //  registrationSelect.remove();
+    //  registrationDeselect.remove();
     }), new Button("fit", e -> {
       nd.diagramFit();
     }), new Button("selectNode", e -> {
-      nd.diagramSelectNodes(Arrays.asList(new String[] {"1", "2"}));
+     // nd.diagramSelectNodes(Arrays.asList(new String[] {"1", "2"}));
     }), new Button("unselectAll", e -> {
       nd.diagramUnselectAll();;
     })));
