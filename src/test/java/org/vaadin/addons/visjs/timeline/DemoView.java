@@ -59,7 +59,7 @@ public class DemoView extends VerticalLayout {
     }), new Button("selectNode", e -> {
      // nd.diagramSelectNodes(Arrays.asList(new String[] {"1", "2"}));
     }), new Button("unselectAll", e -> {
-      nd.diagramUnselectAll();;
+      //nd.diagramUnselectAll();;
     })));
     setSizeFull();
   }

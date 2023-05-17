@@ -97,9 +97,6 @@ public class TimelineDiagram extends Component implements HasSize {
       e.printStackTrace();
     }
 
-    /*Page page = UI.getCurrent().getPage();
-    page.executeJs("window.Vaadin.Flow.networkDiagramConnector.initLazy($0, $1, $2, $3)",
-            getElement(), nodesArray, edgesArray, optionsToJson(options));*/
 
     getUI()
         .orElseThrow(() -> new IllegalStateException(
@@ -135,17 +132,11 @@ public class TimelineDiagram extends Component implements HasSize {
   }
 
   void runBeforeClientResponse(SerializableConsumer<UI> command) {
+
     getElement().getNode()
         .runWhenAttached(ui -> ui.beforeClientResponse(this, context -> command.accept(ui)));
   }
 
-  // public void setCustomNodeIfAdded(final boolean activate, final String id, final String label) {
-  // callFunction("setCustomNodeIfAdded", activate, id, label);
-  // }
-  //
-  // public void setCustomEdgeIfAdded(final boolean activate, final String id, final String label) {
-  // callFunction("setCustomEdgeIfAdded", activate, id, label);
-  // }
 
   // public void updateOptions(final Options options) {
   // getState().updates++;
@@ -284,10 +275,11 @@ public class TimelineDiagram extends Component implements HasSize {
   }
 
   // ==== Diagram-Methods ====
-  public void diagamRedraw() {
+  public void diagramRedraw() {
     runBeforeClientResponse(ui -> getElement().callJsFunction("$connector.diagram.redraw"));
   }
 
+  /** Not Supported on Timeline Yet
   public void diagramSetSize(final String width, final String height) {
     this.setWidth(width);
     this.setHeight(height);
@@ -295,28 +287,22 @@ public class TimelineDiagram extends Component implements HasSize {
         ui -> getElement().callJsFunction("$connector.diagram.setSize", width, height));
   }
 
-  public void diagramSelectItems(Iterable<String> itemIds) {
-    final JsonArray nodeIdArray = StreamSupport.stream(itemIds.spliterator(), false)
+   */
+  public void setSelection(Iterable<String> itemIds) {
+    //TODO: Implement
+    /*
+    final JsonArray itemIdArray = StreamSupport.stream(itemIds.spliterator(), false)
         .map(JreJsonString::new).collect(JsonUtils.asArray());
     runBeforeClientResponse(
-        ui -> getElement().callJsFunction("$connector.diagram.selectItems", nodeIdArray));
+        ui -> getElement().callJsFunction("$connector.diagram.selectItems", itemIdArray));
+
+     */
   }
 
-
-  public void diagramUnselectAll() {
-    runBeforeClientResponse(ui -> getElement().callJsFunction("$connector.diagram.unselectAll"));
-    selections.clear();
-  }
 
   public void diagramFit() {
+    //TODO: Support options
     runBeforeClientResponse(ui -> getElement().callJsFunction("$connector.diagram.fit"));
-  }
-
-  @Override
-  public void setSizeFull() {
-    HasSize.super.setSizeFull();
-    runBeforeClientResponse(
-        ui -> getElement().callJsFunction("$connector.diagram.setSize", getWidth(), getHeight()));
   }
 
   public void diagamDestroy() {
