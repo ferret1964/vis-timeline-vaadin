@@ -1,103 +1,120 @@
 package org.vaadin.addons.visjs.timeline.options;
 
-/**
- * Created by Martin Prause 5.8.2017
- */
+import javax.annotation.Nonnull;
 
 
 public class Locale {
-    private String edit="Edit";
-    private String del="Delete selected";
-    private String back="Back";
-    private String addNode="Add Node";
-    private String addEdge="Add Edge";
-    private String editNode="Edit Node";
-    private String editEdge="Edit Edge";
-    private String addDescription="Click in an empty space to place a new node.";
-    private String edgeDescription="Click on a node and drag the edge to another node to connect them.";
-    private String editEdgeDescription="Click on the control points and drag them to a node to connect to it.";
-    private String createEdgeError="Cannot link edges to a cluster.";
-    private String deleteClusterError="Clusters cannot be deleted.";
-    private String editClusterError="Clusters cannot be edited.";
-	public String getEdit() {
-		return edit;
+
+
+		private String current = "current";
+
+		private String time = "time";
+		private String deleteSelected = "Delete selected";
+
+		public Locale()
+		{
+
+		}
+	private Locale(Builder builder) {
+		setCurrent(builder.current);
+		setTime(builder.time);
+		setDeleteSelected(builder.deleteSelected);
 	}
-	public void setEdit(String edit) {
-		this.edit = edit;
+
+	public static Builder newBuilder(@Nonnull Locale copy) {
+		Builder builder = new Builder();
+		builder.current = copy.getCurrent();
+		builder.time = copy.getTime();
+		builder.deleteSelected = copy.getDeleteSelected();
+		return builder;
 	}
-	public String getDel() {
-		return del;
+	public static Builder newBuilder() {
+		Builder builder = new Builder();
+		return builder;
 	}
-	public void setDel(String del) {
-		this.del = del;
+	public String getCurrent() {
+		return current;
 	}
-	public String getBack() {
-		return back;
+
+	public void setCurrent(String current) {
+		this.current = current;
 	}
-	public void setBack(String back) {
-		this.back = back;
+
+	public String getTime() {
+		return time;
 	}
-	public String getAddNode() {
-		return addNode;
+
+	public void setTime(String time) {
+		this.time = time;
 	}
-	public void setAddNode(String addNode) {
-		this.addNode = addNode;
+
+	public String getDeleteSelected() {
+		return deleteSelected;
 	}
-	public String getAddEdge() {
-		return addEdge;
+
+	public void setDeleteSelected(String deleteSelected) {
+		this.deleteSelected = deleteSelected;
 	}
-	public void setAddEdge(String addEdge) {
-		this.addEdge = addEdge;
+
+	/**
+	 * {@code Locale} builder static inner class.
+	 */
+	public static final class Builder {
+		private String current;
+		private String time;
+		private String deleteSelected;
+
+		private Builder() {
+		}
+
+		public static Builder newBuilder() {
+			return new Builder();
+		}
+
+		/**
+		 * Sets the {@code current} and returns a reference to this Builder enabling method chaining.
+		 *
+		 * @param current the {@code current} to set
+		 * @return a reference to this Builder
+		 */
+		@Nonnull
+		public Builder withCurrent(@Nonnull String current) {
+			this.current = current;
+			return this;
+		}
+
+		/**
+		 * Sets the {@code time} and returns a reference to this Builder enabling method chaining.
+		 *
+		 * @param time the {@code time} to set
+		 * @return a reference to this Builder
+		 */
+		@Nonnull
+		public Builder withTime(@Nonnull String time) {
+			this.time = time;
+			return this;
+		}
+
+		/**
+		 * Sets the {@code deleteSelected} and returns a reference to this Builder enabling method chaining.
+		 *
+		 * @param deleteSelected the {@code deleteSelected} to set
+		 * @return a reference to this Builder
+		 */
+		@Nonnull
+		public Builder withDeleteSelected(@Nonnull String deleteSelected) {
+			this.deleteSelected = deleteSelected;
+			return this;
+		}
+
+		/**
+		 * Returns a {@code Locale} built from the parameters previously set.
+		 *
+		 * @return a {@code Locale} built with parameters of this {@code Locale.Builder}
+		 */
+		@Nonnull
+		public Locale build() {
+			return new Locale(this);
+		}
 	}
-	public String getEditNode() {
-		return editNode;
-	}
-	public void setEditNode(String editNode) {
-		this.editNode = editNode;
-	}
-	public String getEditEdge() {
-		return editEdge;
-	}
-	public void setEditEdge(String editEdge) {
-		this.editEdge = editEdge;
-	}
-	public String getAddDescription() {
-		return addDescription;
-	}
-	public void setAddDescription(String addDescription) {
-		this.addDescription = addDescription;
-	}
-	public String getEdgeDescription() {
-		return edgeDescription;
-	}
-	public void setEdgeDescription(String edgeDescription) {
-		this.edgeDescription = edgeDescription;
-	}
-	public String getEditEdgeDescription() {
-		return editEdgeDescription;
-	}
-	public void setEditEdgeDescription(String editEdgeDescription) {
-		this.editEdgeDescription = editEdgeDescription;
-	}
-	public String getCreateEdgeError() {
-		return createEdgeError;
-	}
-	public void setCreateEdgeError(String createEdgeError) {
-		this.createEdgeError = createEdgeError;
-	}
-	public String getDeleteClusterError() {
-		return deleteClusterError;
-	}
-	public void setDeleteClusterError(String deleteClusterError) {
-		this.deleteClusterError = deleteClusterError;
-	}
-	public String getEditClusterError() {
-		return editClusterError;
-	}
-	public void setEditClusterError(String editClusterError) {
-		this.editClusterError = editClusterError;
-	}
-    
-    
-  
 }

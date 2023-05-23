@@ -1,4 +1,4 @@
-package org.vaadin.addons.visjs.timeline.util;
+package org.vaadin.addons.visjs.timeline.util.deserializers;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
