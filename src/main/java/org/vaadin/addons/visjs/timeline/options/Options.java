@@ -5,8 +5,6 @@ import java.util.Map;
 
 import javax.annotation.Nonnull;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonRawValue;
 import org.vaadin.addons.visjs.timeline.main.TimelineDate;
 import org.vaadin.addons.visjs.timeline.options.cluster.Cluster;
 import org.vaadin.addons.visjs.timeline.options.groups.GroupOrder;
@@ -102,7 +100,7 @@ WARNING: Use with caution. Custom ordering is not suitable for large amounts of 
   //private Function snap;
   //TODO:
   //private Function template;
-  private String template;
+  private String templateCode;
   //private Function visableFrameTemplate;
   private TimeAxis timeAxis;
   private String type;
@@ -166,7 +164,7 @@ WARNING: Use with caution. Custom ordering is not suitable for large amounts of 
     builder.stackSubgroups = copy.getStackSubgroups();
     builder.cluster = copy.getCluster();
     builder.start = copy.getStart();
-    builder.template = copy.getTemplate();
+    builder.templateCode = copy.getTemplateCode();
     builder.timeAxis = copy.getTimeAxis();
     builder.type = copy.getType();
     builder.tooltip = copy.getTooltip();
@@ -490,14 +488,14 @@ WARNING: Use with caution. Custom ordering is not suitable for large amounts of 
     this.cluster = cluster;
   }
 
-  @JsonRawValue
-  public String getTemplate() {
-    return template;
+
+  public String getTemplateCode() {
+    return templateCode;
   }
 
-  @JsonIgnore
-  public void setTemplate(String template) {
-    this.template = template;
+
+  public void setTemplateCode(String templateCode) {
+    this.templateCode = templateCode;
   }
 
   public TimeAxis getTimeAxis() {
@@ -626,7 +624,7 @@ WARNING: Use with caution. Custom ordering is not suitable for large amounts of 
     setStackSubgroups(builder.stackSubgroups);
     setCluster(builder.cluster);
     setStart(builder.start);
-    setTemplate(builder.template);
+    setTemplateCode(builder.templateCode);
     setTimeAxis(builder.timeAxis);
     setType(builder.type);
     setTooltip(builder.tooltip);
@@ -778,7 +776,7 @@ WARNING: Use with caution. Custom ordering is not suitable for large amounts of 
     private Boolean stackSubgroups;
     private Cluster cluster;
     private TimelineDate start;
-    private String template;
+    private String templateCode;
 
     private TimeAxis timeAxis;
     private String type;
@@ -1336,14 +1334,14 @@ WARNING: Use with caution. Custom ordering is not suitable for large amounts of 
     }
 
     /**
-     * Sets the {@code template} and returns a reference to this Builder enabling method chaining.
+     * Sets the {@code templateCode} and returns a reference to this Builder enabling method chaining.
      *
-     * @param template the {@code template} to set
+     * @param templateCode the {@code templateCode} to set
      * @return a reference to this Builder
      */
     @Nonnull
-    public Builder withTemplate(@Nonnull String template) {
-      this.template = template;
+    public Builder withTemplateCode(@Nonnull String templateCode) {
+      this.templateCode = templateCode;
       return this;
     }
 

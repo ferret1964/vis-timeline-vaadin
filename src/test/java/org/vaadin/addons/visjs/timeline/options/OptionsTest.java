@@ -82,7 +82,7 @@ public class OptionsTest extends TestCase {
         options.setMax(TimelineDate.newBuilder().withMoment(Instant.now()).build());
         options.setMin(TimelineDate.newBuilder().withNumber(1000).build());
         //
-       // options.setTemplate("function (item, elelment, data) {return \"<div class=\\\"card\\\"><div class=\\\"card-title\">Encounter</div><div class=\\\"card-location\\\"></div>\"+patientLocations(item.id)+\"</div></div><div class=\\\"network-node\\\" id= \\\"tl\" + item.id + \"\\\"></div>\";");
+        options.setTemplateCode("function (item, elelment, data) {return \"<div class=\\\"card\\\"><div class=\\\"card-title\">Encounter</div><div class=\\\"card-location\\\"></div>\"+patientLocations(item.id)+\"</div></div><div class=\\\"network-node\\\" id= \\\"tl\" + item.id + \"\\\"></div>\";");
         return options;
     }
     @Test
