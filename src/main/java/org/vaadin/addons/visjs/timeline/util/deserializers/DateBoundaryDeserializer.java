@@ -4,11 +4,11 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import org.vaadin.addons.visjs.timeline.options.DateBoundary;
+import org.vaadin.addons.visjs.timeline.main.TimelineDate;
 
 import java.io.IOException;
 
-public class DateBoundaryDeserializer extends StdDeserializer<DateBoundary> {
+public class DateBoundaryDeserializer extends StdDeserializer<TimelineDate> {
 
     public DateBoundaryDeserializer() {
         this(null);
@@ -19,10 +19,10 @@ public class DateBoundaryDeserializer extends StdDeserializer<DateBoundary> {
     }
 
     @Override
-    public DateBoundary deserialize(JsonParser jp, DeserializationContext ctxt)
+    public TimelineDate deserialize(JsonParser jp, DeserializationContext ctxt)
             throws IOException, JsonProcessingException {
         //JsonNode node = jp.getCodec().readTree(jp);
         String value = jp.getCodec().readValue(jp,String.class);
-        return new DateBoundary(value);
+        return new TimelineDate(value);
     }
 }

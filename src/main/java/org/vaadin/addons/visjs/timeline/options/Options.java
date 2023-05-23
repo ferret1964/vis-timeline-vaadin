@@ -6,7 +6,8 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
+import com.fasterxml.jackson.annotation.JsonRawValue;
+import org.vaadin.addons.visjs.timeline.main.TimelineDate;
 import org.vaadin.addons.visjs.timeline.options.cluster.Cluster;
 import org.vaadin.addons.visjs.timeline.options.groups.GroupOrder;
 import org.vaadin.addons.visjs.timeline.options.groups.GroupOrderSwap;
@@ -23,7 +24,7 @@ public class Options {
   private DataAttributes dataAttributes;
   private Editable editable;
 
-  private DateBoundary end;
+  private TimelineDate end;
   private DateFormat format;
   private Editable groupEditable;
   private String groupHeightMode;
@@ -43,10 +44,10 @@ public class Options {
   private int longSelectPressTimee = 251;
   private Moment moment;
   private Margin margin;
-  private DateBoundary max;
+  private TimelineDate max;
   private String maxHeight;
   private int maxMinorCharacters = 7;
-  private DateBoundary min;
+  private TimelineDate min;
   private String minHeight;
   private Boolean movable = Boolean.TRUE;
   private Boolean multiselect;
@@ -96,11 +97,12 @@ WARNING: Use with caution. Custom ordering is not suitable for large amounts of 
 
   private Cluster cluster;
 
-  private DateBoundary start;
+  private TimelineDate start;
 
   //private Function snap;
   //TODO:
   //private Function template;
+  private String template;
   //private Function visableFrameTemplate;
   private TimeAxis timeAxis;
   private String type;
@@ -164,6 +166,7 @@ WARNING: Use with caution. Custom ordering is not suitable for large amounts of 
     builder.stackSubgroups = copy.getStackSubgroups();
     builder.cluster = copy.getCluster();
     builder.start = copy.getStart();
+    builder.template = copy.getTemplate();
     builder.timeAxis = copy.getTimeAxis();
     builder.type = copy.getType();
     builder.tooltip = copy.getTooltip();
@@ -210,11 +213,11 @@ WARNING: Use with caution. Custom ordering is not suitable for large amounts of 
     this.editable = editable;
   }
 
-  public DateBoundary getEnd() {
+  public TimelineDate getEnd() {
     return end;
   }
 
-  public void setEnd(DateBoundary end) {
+  public void setEnd(TimelineDate end) {
     this.end = end;
   }
 
@@ -315,11 +318,11 @@ WARNING: Use with caution. Custom ordering is not suitable for large amounts of 
     this.margin = margin;
   }
 
-  public DateBoundary getMax() {
+  public TimelineDate getMax() {
     return max;
   }
 
-  public void setMax(DateBoundary max) {
+  public void setMax(TimelineDate max) {
     this.max = max;
   }
 
@@ -339,11 +342,11 @@ WARNING: Use with caution. Custom ordering is not suitable for large amounts of 
     this.maxMinorCharacters = maxMinorCharacters;
   }
 
-  public DateBoundary getMin() {
+  public TimelineDate getMin() {
     return min;
   }
 
-  public void setMin(DateBoundary min) {
+  public void setMin(TimelineDate min) {
     this.min = min;
   }
 
@@ -475,7 +478,7 @@ WARNING: Use with caution. Custom ordering is not suitable for large amounts of 
     this.stack = stack;
   }
 
-  public DateBoundary getStart() {
+  public TimelineDate getStart() {
     return start;
   }
 
@@ -485,6 +488,16 @@ WARNING: Use with caution. Custom ordering is not suitable for large amounts of 
 
   public void setCluster(Cluster cluster) {
     this.cluster = cluster;
+  }
+
+  @JsonRawValue
+  public String getTemplate() {
+    return template;
+  }
+
+  @JsonIgnore
+  public void setTemplate(String template) {
+    this.template = template;
   }
 
   public TimeAxis getTimeAxis() {
@@ -613,6 +626,7 @@ WARNING: Use with caution. Custom ordering is not suitable for large amounts of 
     setStackSubgroups(builder.stackSubgroups);
     setCluster(builder.cluster);
     setStart(builder.start);
+    setTemplate(builder.template);
     setTimeAxis(builder.timeAxis);
     setType(builder.type);
     setTooltip(builder.tooltip);
@@ -628,10 +642,6 @@ WARNING: Use with caution. Custom ordering is not suitable for large amounts of 
 
   public Options() {}
 
-
-  public Boolean isAutoResize() {
-    return autoResize;
-  }
 
   public void setAutoResize(final Boolean autoResize) {
     this.autoResize = autoResize;
@@ -667,9 +677,6 @@ WARNING: Use with caution. Custom ordering is not suitable for large amounts of 
    */
 
 
-  public Boolean isClickToUse() {
-    return clickToUse;
-  }
 
   public void setClickToUse(final Boolean clickToUse) {
     this.clickToUse = clickToUse;
@@ -699,7 +706,7 @@ WARNING: Use with caution. Custom ordering is not suitable for large amounts of 
     this.locales = locales;
   }
 
-  public void setStart(DateBoundary start) {
+  public void setStart(TimelineDate start) {
     this.start = start;
   }
 
@@ -726,7 +733,7 @@ WARNING: Use with caution. Custom ordering is not suitable for large amounts of 
     private DataAttributes dataAttributes;
     private Editable editable;
 
-    private DateBoundary end;
+    private TimelineDate end;
     private DateFormat format;
     private Editable groupEditable;
     private String groupHeightMode;
@@ -746,10 +753,10 @@ WARNING: Use with caution. Custom ordering is not suitable for large amounts of 
     private int longSelectPressTimee;
     private Moment moment;
     private Margin margin;
-    private DateBoundary max;
+    private TimelineDate max;
     private String maxHeight;
     private int maxMinorCharacters;
-    private DateBoundary min;
+    private TimelineDate min;
     private String minHeight;
     private Boolean movable;
     private Boolean multiselect;
@@ -770,7 +777,8 @@ WARNING: Use with caution. Custom ordering is not suitable for large amounts of 
     private Boolean stack;
     private Boolean stackSubgroups;
     private Cluster cluster;
-    private DateBoundary start;
+    private TimelineDate start;
+    private String template;
 
     private TimeAxis timeAxis;
     private String type;
@@ -783,7 +791,7 @@ WARNING: Use with caution. Custom ordering is not suitable for large amounts of 
     private int zoomFriction = 5;
     private String zoomKey;
 
-    private long zoomMax = 315360000000000L   ;
+    private long zoomMax = 315360000000000L;
     private long zoomMin = 10;
 
     private Builder() {
@@ -872,7 +880,7 @@ WARNING: Use with caution. Custom ordering is not suitable for large amounts of 
      * @return a reference to this Builder
      */
     @Nonnull
-    public Builder withEnd(@Nonnull DateBoundary end) {
+    public Builder withEnd(@Nonnull TimelineDate end) {
       this.end = end;
       return this;
     }
@@ -1064,7 +1072,7 @@ WARNING: Use with caution. Custom ordering is not suitable for large amounts of 
      * @return a reference to this Builder
      */
     @Nonnull
-    public Builder withMax(@Nonnull DateBoundary max) {
+    public Builder withMax(@Nonnull TimelineDate max) {
       this.max = max;
       return this;
     }
@@ -1100,7 +1108,7 @@ WARNING: Use with caution. Custom ordering is not suitable for large amounts of 
      * @return a reference to this Builder
      */
     @Nonnull
-    public Builder withMin(@Nonnull DateBoundary min) {
+    public Builder withMin(@Nonnull TimelineDate min) {
       this.min = min;
       return this;
     }
@@ -1322,8 +1330,20 @@ WARNING: Use with caution. Custom ordering is not suitable for large amounts of 
      * @return a reference to this Builder
      */
     @Nonnull
-    public Builder withStart(@Nonnull DateBoundary start) {
+    public Builder withStart(@Nonnull TimelineDate start) {
       this.start = start;
+      return this;
+    }
+
+    /**
+     * Sets the {@code template} and returns a reference to this Builder enabling method chaining.
+     *
+     * @param template the {@code template} to set
+     * @return a reference to this Builder
+     */
+    @Nonnull
+    public Builder withTemplate(@Nonnull String template) {
+      this.template = template;
       return this;
     }
 

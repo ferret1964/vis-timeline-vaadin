@@ -19,12 +19,12 @@ public class ItemsAlwaysDraggable {
     }
     public static Builder newBuilder(@Nonnull ItemsAlwaysDraggable copy) {
         Builder builder = new Builder();
-        builder.item = copy.isItem();
-        builder.range = copy.isRange();
+        builder.item = copy.getItem();
+        builder.range = copy.getRange();
         return builder;
     }
 
-    public Boolean isItem() {
+    public Boolean getItem() {
         return item;
     }
 
@@ -32,7 +32,7 @@ public class ItemsAlwaysDraggable {
         this.item = item;
     }
 
-    public Boolean isRange() {
+    public Boolean getRange() {
         return range;
     }
 

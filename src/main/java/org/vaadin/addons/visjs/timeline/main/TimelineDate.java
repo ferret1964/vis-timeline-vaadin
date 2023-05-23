@@ -1,4 +1,4 @@
-package org.vaadin.addons.visjs.timeline.options;
+package org.vaadin.addons.visjs.timeline.main;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -13,7 +13,7 @@ import java.time.LocalDate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 @JsonDeserialize(using = DateBoundaryDeserializer.class)
-public class DateBoundary {
+public class TimelineDate {
 
     private DateType type = DateType.EMPTY;
 
@@ -24,12 +24,12 @@ public class DateBoundary {
     private int dateAsNumber;
     private Instant dateAsMoment;
 
-    public DateBoundary()
+    public TimelineDate()
     {
 
     }
     // @JsonCreator
-    public DateBoundary(String value)
+    public TimelineDate(String value)
     {
             if (value.endsWith("Z")) {
                 try {
@@ -63,7 +63,7 @@ public class DateBoundary {
 
     }
 
-    private DateBoundary(Builder builder) {
+    private TimelineDate(Builder builder) {
         switch(builder.type)
         {
             case DATE:
@@ -93,7 +93,7 @@ public class DateBoundary {
         }
     }
 
-    public static Builder newBuilder(@Nonnull DateBoundary copy) {
+    public static Builder newBuilder(@Nonnull TimelineDate copy) {
         Builder builder = new Builder();
         builder.dateAsString = copy.getDateAsString();
         builder.dateAsDate = copy.getDateAsDate();
@@ -222,7 +222,7 @@ public class DateBoundary {
     }
 
     /**
-     * {@code DateBoundary} builder static inner class.
+     * {@code TimelineDate} builder static inner class.
      */
     public static final class Builder {
 
@@ -304,13 +304,13 @@ public class DateBoundary {
         }
 
         /**
-         * Returns a {@code DateBoundary} built from the parameters previously set.
+         * Returns a {@code TimelineDate} built from the parameters previously set.
          *
-         * @return a {@code DateBoundary} built with parameters of this {@code DateBoundary.Builder}
+         * @return a {@code TimelineDate} built with parameters of this {@code TimelineDate.Builder}
          */
         @Nonnull
-        public DateBoundary build() {
-            return new DateBoundary(this);
+        public TimelineDate build() {
+            return new TimelineDate(this);
         }
     }
 

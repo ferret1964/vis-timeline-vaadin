@@ -16,7 +16,7 @@ public class RollingMode {
 
     public static Builder newBuilder(@Nonnull RollingMode copy) {
         Builder builder = new Builder();
-        builder.follow = copy.isFollow();
+        builder.follow = copy.getFollow();
         builder.offset = copy.getOffset();
         return builder;
     }
@@ -24,7 +24,7 @@ public class RollingMode {
         Builder builder = new Builder();
         return builder;
     }
-    public Boolean isFollow() {
+    public Boolean getFollow() {
         return follow;
     }
 

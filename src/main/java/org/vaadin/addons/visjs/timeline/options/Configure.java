@@ -30,20 +30,20 @@ public class Configure {
 
 	public static Builder newBuilder(@Nonnull Configure copy) {
 		Builder builder = new Builder();
-		builder.enabled = copy.isEnabled();
-		builder.showButton = copy.isShowButton();
+		builder.enabled = copy.getEnabled();
+		builder.showButton = copy.getShowButton();
 		builder.filter = copy.getFilter();
 		builder.container = copy.getContainer();
 		return builder;
 	}
 
-	public Boolean isEnabled() {
+	public Boolean getEnabled() {
 		return enabled;
 	}
 	public void setEnabled(Boolean enabled) {
 		this.enabled = enabled;
 	}
-	public Boolean isShowButton() {
+	public Boolean getShowButton() {
 		return showButton;
 	}
 	public void setShowButton(Boolean showButton) {

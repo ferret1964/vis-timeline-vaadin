@@ -52,15 +52,15 @@ public class EditableObject extends Editable{
     }
     public static Builder newBuilder(@Nonnull EditableObject copy) {
         Builder builder = new Builder();
-        builder.add = copy.isAdd();
-        builder.remove = copy.isRemove();
-        builder.updateGroup = copy.isUpdateGroup();
-        builder.updateTime = copy.isUpdateTime();
-        builder.overrideItems = copy.isOverrideItems();
+        builder.add = copy.getAdd();
+        builder.remove = copy.getRemove();
+        builder.updateGroup = copy.getUpdateGroup();
+        builder.updateTime = copy.getUpdateTime();
+        builder.overrideItems = copy.getOverrideItems();
         return builder;
     }
 
-    public Boolean isAdd() {
+    public Boolean getAdd() {
         return add;
     }
 
@@ -68,7 +68,7 @@ public class EditableObject extends Editable{
         this.add = add;
     }
 
-    public Boolean isRemove() {
+    public Boolean getRemove() {
         return remove;
     }
 
@@ -76,7 +76,7 @@ public class EditableObject extends Editable{
         this.remove = remove;
     }
 
-    public Boolean isUpdateGroup() {
+    public Boolean getUpdateGroup() {
         return updateGroup;
     }
 
@@ -84,7 +84,7 @@ public class EditableObject extends Editable{
         this.updateGroup = updateGroup;
     }
 
-    public Boolean isUpdateTime() {
+    public Boolean getUpdateTime() {
         return updateTime;
     }
 
@@ -92,7 +92,7 @@ public class EditableObject extends Editable{
         this.updateTime = updateTime;
     }
 
-    public Boolean isOverrideItems() {
+    public Boolean getOverrideItems() {
         return overrideItems;
     }
 

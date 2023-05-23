@@ -3,16 +3,17 @@ package org.vaadin.addons.visjs.timeline.options;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import junit.framework.TestCase;
 import org.junit.Assert;
+import org.vaadin.addons.visjs.timeline.main.TimelineDate;
 import org.vaadin.addons.visjs.timeline.util.JsonObjectMapping;
 
 import java.time.Instant;
 import java.time.LocalDate;
 
 
-public class DateBoundaryTest extends TestCase {
+public class TimelineDateTest extends TestCase {
 
     public void testGetJSON() throws JsonProcessingException {
-        DateBoundary test = DateBoundary.newBuilder().build();
+        TimelineDate test = TimelineDate.newBuilder().build();
         System.out.println(test.getJSON());
         test.setDateAsString("2030-01-01");
         System.out.println(test.getJSON());
@@ -25,7 +26,7 @@ public class DateBoundaryTest extends TestCase {
         System.out.println(out);
         System.out.println(out.getClass().getName());
         String out2 = JsonObjectMapping.getObjectMapper().writeValueAsString(out);
-        DateBoundary chk = JsonObjectMapping.getObjectMapper().readValue(out2,DateBoundary.class );
+        TimelineDate chk = JsonObjectMapping.getObjectMapper().readValue(out2, TimelineDate.class );
         Assert.assertNotNull(chk);
         System.out.println(chk.getJSON());
     }

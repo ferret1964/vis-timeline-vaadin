@@ -2,15 +2,14 @@ package org.vaadin.addons.visjs.timeline.options;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import junit.framework.TestCase;
-import org.atmosphere.interceptor.AtmosphereResourceStateRecovery;
 import org.junit.Assert;
 import org.junit.Test;
+import org.vaadin.addons.visjs.timeline.main.TimelineDate;
 import org.vaadin.addons.visjs.timeline.options.cluster.Cluster;
 import org.vaadin.addons.visjs.timeline.util.JsonObjectMapping;
 
 import java.time.Instant;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.HashMap;
 
 public class OptionsTest extends TestCase {
@@ -78,10 +77,12 @@ public class OptionsTest extends TestCase {
         options.setZoomMax(3153600000000L);
         options.setZoomMin(15);
         //
-        options.setStart(DateBoundary.newBuilder().withDate(LocalDate.now()).build());
-        options.setEnd(DateBoundary.newBuilder().withString("tomorrow").build());
-        options.setMax(DateBoundary.newBuilder().withMoment(Instant.now()).build());
-        options.setMin(DateBoundary.newBuilder().withNumber(1000).build());
+        options.setStart(TimelineDate.newBuilder().withDate(LocalDate.now()).build());
+        options.setEnd(TimelineDate.newBuilder().withString("tomorrow").build());
+        options.setMax(TimelineDate.newBuilder().withMoment(Instant.now()).build());
+        options.setMin(TimelineDate.newBuilder().withNumber(1000).build());
+        //
+       // options.setTemplate("function (item, elelment, data) {return \"<div class=\\\"card\\\"><div class=\\\"card-title\">Encounter</div><div class=\\\"card-location\\\"></div>\"+patientLocations(item.id)+\"</div></div><div class=\\\"network-node\\\" id= \\\"tl\" + item.id + \"\\\"></div>\";");
         return options;
     }
     @Test
@@ -93,17 +94,17 @@ public class OptionsTest extends TestCase {
         System.out.println(out);
         Options chk = JsonObjectMapping.getObjectMapper().readValue(out,Options.class );
         Assert.assertNotNull(chk);
-        Assert.assertTrue(chk.getStart().getType() == DateBoundary.DateType.DATE);
-        Assert.assertTrue(chk.getEnd().getType() == DateBoundary.DateType.STRING);
-        Assert.assertTrue(chk.getMin().getType() == DateBoundary.DateType.NUMBER);
-        Assert.assertTrue(chk.getMax().getType() == DateBoundary.DateType.MOMENT);
+        Assert.assertTrue(chk.getStart().getType() == TimelineDate.DateType.DATE);
+        Assert.assertTrue(chk.getEnd().getType() == TimelineDate.DateType.STRING);
+        Assert.assertTrue(chk.getMin().getType() == TimelineDate.DateType.NUMBER);
+        Assert.assertTrue(chk.getMax().getType() == TimelineDate.DateType.MOMENT);
         out = JsonObjectMapping.getObjectMapper().writeValueAsString(chk);
         System.out.println(out);
     }
     @Test
     public void testGetEnd() {
         Options options = buildOptions();
-        DateBoundary fnd = options.getEnd();
+        TimelineDate fnd = options.getEnd();
         Assert.assertNotNull(fnd);
     }
 }

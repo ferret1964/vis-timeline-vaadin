@@ -22,7 +22,7 @@ public class Shadow {
 
   public Shadow() {}
 
-  public Boolean isEnabled() {
+  public Boolean getEnabled() {
     return enabled;
   }
 

@@ -20,14 +20,14 @@ public class EditableSimple extends Editable {
     }
     public static Builder newBuilder(@Nonnull EditableSimple copy) {
         Builder builder = new Builder();
-        builder.editable = copy.isEditable();
+        builder.editable = copy.getEditable();
         return builder;
     }
     public static Builder newBuilder() {
         Builder builder = new Builder();
         return builder;
     }
-    public Boolean isEditable() {
+    public Boolean getEditable() {
         return editable;
     }
 

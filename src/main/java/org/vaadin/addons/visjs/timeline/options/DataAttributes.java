@@ -51,7 +51,7 @@ public class DataAttributes {
 
     public static Builder newBuilder(@Nonnull DataAttributes copy) {
         Builder builder = new Builder();
-        builder.useAll = copy.isUseAll();
+        builder.useAll = copy.getUseAll();
         builder.attributes = copy.getAttributes();
         return builder;
     }
@@ -61,7 +61,7 @@ public class DataAttributes {
         return builder;
     }
 
-    public Boolean isUseAll() {
+    public Boolean getUseAll() {
         return useAll;
     }
 
