@@ -1,7 +1,8 @@
-package org.vaadin.addons.visjs.timeline.options.items;
+package org.vaadin.addons.visjs.timeline.main;
 
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import org.vaadin.addons.visjs.timeline.options.items.Editable;
 
 import javax.annotation.Nonnull;
 import java.time.LocalDateTime;
@@ -99,11 +100,11 @@ public class Items
         this.limitSize = limitSize;
     }
 
-    public Editable getEdiable() {
+    public Editable getEditable() {
         return editable;
     }
 
-    public void setEdiable(Editable editable) {
+    public void setEditable(Editable editable) {
         this.editable = editable;
     }
 

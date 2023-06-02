@@ -9,6 +9,7 @@ import org.vaadin.addons.visjs.timeline.event.ContextMenuEvent;
  *
  * @author Jerry Goodnough
  *
+ *
  * */
 public interface ContextMenuListener extends ComponentEventListener<ContextMenuEvent>{
 }

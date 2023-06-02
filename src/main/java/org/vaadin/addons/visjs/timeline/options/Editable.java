@@ -1,20 +1,18 @@
 package org.vaadin.addons.visjs.timeline.options;
 
-/**
- * Created by trobar 4.8.2017
- */
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import org.vaadin.addons.visjs.timeline.util.deserializers.DataAttributesDeserializer;
+import org.vaadin.addons.visjs.timeline.util.deserializers.EditableDeserializer;
+
+@JsonDeserialize(using = EditableDeserializer.class)
 public class Editable {
-
-  private boolean enabled = false;
-  // All other fields are callback functions -> refer to NetworkDiagram
-
-  public boolean isEnabled() {
-    return enabled;
-  }
-
-  public void setEnabled(final boolean enabled) {
-    this.enabled = enabled;
-  }
-
+    public static EditableSimple.Builder newSimpleBuilder() {
+        EditableSimple.Builder builder = EditableSimple.newBuilder();
+        return builder;
+    }
+    public static EditableObject.Builder newObjectBuilder() {
+        EditableObject.Builder builder = EditableObject.newBuilder();
+        return builder;
+    }
 
 }

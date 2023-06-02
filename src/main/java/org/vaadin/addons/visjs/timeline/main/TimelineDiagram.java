@@ -41,9 +41,9 @@ import com.vaadin.flow.component.dependency.NpmPackage;
  */
 @SuppressWarnings("serial")
 @Tag("div")
-@JsModule("./vis-loader-new.ts")
+@JsModule("./timeline-loader-new.ts")
 @JsModule("./timelineDiagram-connector-flow.js")
-@JsModule("vis-timeline/standalone/umd/vis-timeline.min.js")
+@JsModule("vis-timeline/standalone/umd/vis-timeline-graph2d.min.js")
 @NpmPackage(value = "vis-timeline", version = "7.7.2")
 public class TimelineDiagram extends Component implements HasSize {
 
@@ -97,15 +97,12 @@ public class TimelineDiagram extends Component implements HasSize {
       e.printStackTrace();
     }
 
-    /*Page page = UI.getCurrent().getPage();
-    page.executeJs("window.Vaadin.Flow.networkDiagramConnector.initLazy($0, $1, $2, $3)",
-            getElement(), nodesArray, edgesArray, optionsToJson(options));*/
 
     getUI()
         .orElseThrow(() -> new IllegalStateException(
             "Connector can only be initialized for an attached NetworkDiagram"))
         .getPage()
-        .executeJs("window.Vaadin.Flow.timelinekDiagramConnector.initLazy($0, $1, $2, $3)",
+        .executeJs("window.Vaadin.Flow.timelineDiagramConnector.initLazy($0, $1, $2, $3)",
             getElement(), itemArray, groupsArray, optionsToJson(options));
 
 
@@ -135,17 +132,11 @@ public class TimelineDiagram extends Component implements HasSize {
   }
 
   void runBeforeClientResponse(SerializableConsumer<UI> command) {
+
     getElement().getNode()
         .runWhenAttached(ui -> ui.beforeClientResponse(this, context -> command.accept(ui)));
   }
 
-  // public void setCustomNodeIfAdded(final boolean activate, final String id, final String label) {
-  // callFunction("setCustomNodeIfAdded", activate, id, label);
-  // }
-  //
-  // public void setCustomEdgeIfAdded(final boolean activate, final String id, final String label) {
-  // callFunction("setCustomEdgeIfAdded", activate, id, label);
-  // }
 
   // public void updateOptions(final Options options) {
   // getState().updates++;
@@ -284,10 +275,11 @@ public class TimelineDiagram extends Component implements HasSize {
   }
 
   // ==== Diagram-Methods ====
-  public void diagamRedraw() {
+  public void diagramRedraw() {
     runBeforeClientResponse(ui -> getElement().callJsFunction("$connector.diagram.redraw"));
   }
 
+  /** Not Supported on Timeline Yet
   public void diagramSetSize(final String width, final String height) {
     this.setWidth(width);
     this.setHeight(height);
@@ -295,28 +287,22 @@ public class TimelineDiagram extends Component implements HasSize {
         ui -> getElement().callJsFunction("$connector.diagram.setSize", width, height));
   }
 
-  public void diagramSelectItems(Iterable<String> itemIds) {
-    final JsonArray nodeIdArray = StreamSupport.stream(itemIds.spliterator(), false)
+   */
+  public void setSelection(Iterable<String> itemIds) {
+    //TODO: Implement
+    /*
+    final JsonArray itemIdArray = StreamSupport.stream(itemIds.spliterator(), false)
         .map(JreJsonString::new).collect(JsonUtils.asArray());
     runBeforeClientResponse(
-        ui -> getElement().callJsFunction("$connector.diagram.selectItems", nodeIdArray));
+        ui -> getElement().callJsFunction("$connector.diagram.selectItems", itemIdArray));
+
+     */
   }
 
-
-  public void diagramUnselectAll() {
-    runBeforeClientResponse(ui -> getElement().callJsFunction("$connector.diagram.unselectAll"));
-    selections.clear();
-  }
 
   public void diagramFit() {
+    //TODO: Support options
     runBeforeClientResponse(ui -> getElement().callJsFunction("$connector.diagram.fit"));
-  }
-
-  @Override
-  public void setSizeFull() {
-    HasSize.super.setSizeFull();
-    runBeforeClientResponse(
-        ui -> getElement().callJsFunction("$connector.diagram.setSize", getWidth(), getHeight()));
   }
 
   public void diagamDestroy() {
@@ -334,6 +320,10 @@ public class TimelineDiagram extends Component implements HasSize {
     });
   }
 
+  public Registration addChangeListener(final ChangedListener listener) {
+    enableEventDispatching(ChangedEvent.class);
+    return addListener(ChangedEvent.class, listener);
+  }
   public Registration addClickListener(final ClickListener listener) {
     enableEventDispatching(ClickEvent.class);
     return addListener(ClickEvent.class, listener);
@@ -363,6 +353,63 @@ public class TimelineDiagram extends Component implements HasSize {
     enableEventDispatching(DropEvent.class);
     return addListener(DropEvent.class, listener);
   }
+
+  public Registration addGroupDraggedListener(final GroupDraggedListener listener) {
+    enableEventDispatching(GroupDraggedEvent.class);
+    return addListener(GroupDraggedEvent.class, listener);
+  }
+
+
+  public Registration addItemOverListener(final ItemOverListener listener) {
+    enableEventDispatching(ItemOverEvent.class);
+    return addListener(ItemOverEvent.class, listener);
+  }
+
+  public Registration addMarkerChangeListener(final MarkerChangeListener listener) {
+    enableEventDispatching(MarkerChangeEvent.class);
+    return addListener(MarkerChangeEvent.class, listener);
+  }
+
+  public Registration addMouseDownListener(final MouseDownListener listener) {
+    enableEventDispatching(MouseDownEvent.class);
+    return addListener(MouseDownEvent.class, listener);
+  }
+
+  public Registration addMouseMoveListener(final MouseMoveListener listener) {
+    enableEventDispatching(MouseMoveEvent.class);
+    return addListener(MouseMoveEvent.class, listener);
+  }
+
+  public Registration addMouseOverListener(final MouseOverListener listener) {
+    enableEventDispatching(MouseOverEvent.class);
+    return addListener(MouseOverEvent.class, listener);
+  }
+
+  public Registration addMouseUpListener(final MouseUpListener listener) {
+    enableEventDispatching(MouseUpEvent.class);
+    return addListener(MouseUpEvent.class, listener);
+  }
+
+  public Registration addRangeChangedistener(final RangeChangedListener listener) {
+    enableEventDispatching(RangeChangedEvent.class);
+    return addListener(RangeChangedEvent.class, listener);
+  }
+
+  public Registration addRangeChangeListener(final RangeChangeListener listener) {
+    enableEventDispatching(RangeChangeEvent.class);
+    return addListener(RangeChangeEvent.class, listener);
+  }
+
+  public Registration addTimeChangedListener(final TimeChangedListener listener) {
+    enableEventDispatching(TimeChangedEvent.class);
+    return addListener(TimeChangedEvent.class, listener);
+  }
+
+  public Registration addGroupDraggedListener(final TimeChangeListener listener) {
+    enableEventDispatching(TimeChangeEvent.class);
+    return addListener(TimeChangeEvent.class, listener);
+  }
+
   public Registration addSelectListener(final SelectListener listener) {
     enableEventDispatching(SelectEvent.class);
     return addListener(SelectEvent.class, listener);
@@ -370,10 +417,6 @@ public class TimelineDiagram extends Component implements HasSize {
 
 
 
-  public Registration addChangeListener(final ChangedListener listener) {
-    enableEventDispatching(ChangedEvent.class);
-    return addListener(ChangedEvent.class, listener);
-  }
 
   private static class TimelineDiagramRegistration implements Registration {
     private boolean isInvoked;

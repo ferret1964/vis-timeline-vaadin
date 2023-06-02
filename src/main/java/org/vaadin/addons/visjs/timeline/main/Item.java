@@ -1,15 +1,9 @@
 package org.vaadin.addons.visjs.timeline.main;
 
-import org.vaadin.addons.visjs.timeline.options.items.Items;
-
 public class Item extends Items {
 
     private String id;
 
-    // @JsonIgnore
-    // private transient List<Edge> edgeList = new ArrayList<>();;
-    // @JsonIgnore
-    // private transient Map<String, Edge> edgeMap = new HashMap<>();;
 
     public Item() {};
 
