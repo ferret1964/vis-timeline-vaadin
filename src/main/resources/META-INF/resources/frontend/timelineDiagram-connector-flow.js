@@ -75,7 +75,7 @@ window.Vaadin.Flow.timelineDiagramConnector = {
 
 		theTimeLine.$connector.addGroups = function(groups) {
 			let groupsObject = JSON.parse(groups);
-			theTimeLine.groups.add(edgesObject);
+			theTimeLine.groups.add(groupsObject);
 		}
 
 		theTimeLine.$connector.updateGroups = function(groups) {
@@ -94,7 +94,7 @@ window.Vaadin.Flow.timelineDiagramConnector = {
 		theTimeLine.$connector.addItems = function(items) {
 			// console.log("addItems: " + typeof items + "=" +
 			// JSON.stringify(items));
-			let itemssObject = JSON.parse(items``);
+			let itemsObject = JSON.parse(items);
 			// console.log("addItemsParsed: " + typeof itemsObject + "=" +
 			// JSON.stringify(itemssObject));
 			theTimeLine.items.add(itemsObject);
@@ -109,7 +109,7 @@ window.Vaadin.Flow.timelineDiagramConnector = {
 		};
 
 		theTimeLine.$connector.clearGroups = function() {
-			theTimeLine.Groups.clear();
+			theTimeLine.groups.clear();
 		};
 	}
 }

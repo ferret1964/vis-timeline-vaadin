@@ -41,11 +41,11 @@ public class OptionsTest extends TestCase {
         testLocale.put("MyLocale", Locale.newBuilder().withCurrent("CURRENT").build());
         options.setLocales(testLocale);
         options.setLocale("MyLocale");
-        options.setLongSelectPressTimee(255);
+        options.setLongSelectPressTime(255);
         //options.setMoment(); - NYI
         options.setMargin(Margin.newBuilder().withAxis(20).withHorizontal(10).withVertical(12).build());
         options.setMaxHeight("300px");
-        options.setMaxMinorCharacters(8);
+        options.setMaxMinorChars(8);
         options.setMinHeight("200px");
         options.setMovable(Boolean.TRUE);
         options.setMultiselect(Boolean.TRUE);

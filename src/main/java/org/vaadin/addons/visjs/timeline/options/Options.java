@@ -39,12 +39,12 @@ public class Options {
   private String locale;
 
   private Map<String, Locale> locales = new HashMap<>();
-  private int longSelectPressTimee = 251;
+  private int longSelectPressTime;
   private Moment moment;
   private Margin margin;
   private TimelineDate max;
   private String maxHeight;
-  private int maxMinorCharacters = 7;
+  private int maxMinorChars;
   private TimelineDate min;
   private String minHeight;
   private Boolean movable = Boolean.TRUE;
@@ -138,12 +138,12 @@ WARNING: Use with caution. Custom ordering is not suitable for large amounts of 
     builder.itemsAlwaysDraggable = copy.getItemsAlwaysDraggable();
     builder.locale = copy.getLocale();
     builder.locales = copy.getLocales();
-    builder.longSelectPressTimee = copy.getLongSelectPressTimee();
+    builder.longSelectPressTime = copy.getLongSelectPressTime();
     builder.moment = copy.getMoment();
     builder.margin = copy.getMargin();
     builder.max = copy.getMax();
     builder.maxHeight = copy.getMaxHeight();
-    builder.maxMinorCharacters = copy.getMaxMinorCharacters();
+    builder.maxMinorChars = copy.getMaxMinorChars();
     builder.min = copy.getMin();
     builder.minHeight = copy.getMinHeight();
     builder.movable = copy.getMovable();
@@ -291,14 +291,13 @@ WARNING: Use with caution. Custom ordering is not suitable for large amounts of 
     this.itemsAlwaysDraggable = itemsAlwaysDraggable;
   }
 
-  public int getLongSelectPressTimee() {
-    return longSelectPressTimee;
+  public int getLongSelectPressTime() {
+    return longSelectPressTime;
   }
 
-  public void setLongSelectPressTimee(int longSelectPressTimee) {
-    this.longSelectPressTimee = longSelectPressTimee;
+  public void setLongSelectPressTime(int longSelectPressTime) {
+    this.longSelectPressTime = longSelectPressTime;
   }
-
 
   public Moment getMoment() {
     return moment;
@@ -332,12 +331,12 @@ WARNING: Use with caution. Custom ordering is not suitable for large amounts of 
     this.maxHeight = maxHeight;
   }
 
-  public int getMaxMinorCharacters() {
-    return maxMinorCharacters;
+  public int getMaxMinorChars() {
+    return maxMinorChars;
   }
 
-  public void setMaxMinorCharacters(int maxMinorCharacters) {
-    this.maxMinorCharacters = maxMinorCharacters;
+  public void setMaxMinorChars(int maxMinorChars) {
+    this.maxMinorChars = maxMinorChars;
   }
 
   public TimelineDate getMin() {
@@ -598,12 +597,12 @@ WARNING: Use with caution. Custom ordering is not suitable for large amounts of 
     setItemsAlwaysDraggable(builder.itemsAlwaysDraggable);
     setLocale(builder.locale);
     setLocales(builder.locales);
-    setLongSelectPressTimee(builder.longSelectPressTimee);
+    setLongSelectPressTime(builder.longSelectPressTime);
     setMoment(builder.moment);
     setMargin(builder.margin);
     setMax(builder.max);
     setMaxHeight(builder.maxHeight);
-    setMaxMinorCharacters(builder.maxMinorCharacters);
+    setMaxMinorChars(builder.maxMinorChars);
     setMin(builder.min);
     setMinHeight(builder.minHeight);
     setMovable(builder.movable);
@@ -748,12 +747,12 @@ WARNING: Use with caution. Custom ordering is not suitable for large amounts of 
     private String locale;
 
     private Map<String, Locale> locales;
-    private int longSelectPressTimee;
+    private int longSelectPressTime;
     private Moment moment;
     private Margin margin;
     private TimelineDate max;
     private String maxHeight;
-    private int maxMinorCharacters;
+    private int maxMinorChars;
     private TimelineDate min;
     private String minHeight;
     private Boolean movable;
@@ -1028,14 +1027,14 @@ WARNING: Use with caution. Custom ordering is not suitable for large amounts of 
     }
 
     /**
-     * Sets the {@code longSelectPressTimee} and returns a reference to this Builder enabling method chaining.
+     * Sets the {@code longSelectPressTime} and returns a reference to this Builder enabling method chaining.
      *
-     * @param longSelectPressTimee the {@code longSelectPressTimee} to set
+     * @param longSelectPressTime the {@code longSelectPressTime} to set
      * @return a reference to this Builder
      */
     @Nonnull
-    public Builder withLongSelectPressTimee(int longSelectPressTimee) {
-      this.longSelectPressTimee = longSelectPressTimee;
+    public Builder withLongSelectPressTime(int longSelectPressTime) {
+      this.longSelectPressTime = longSelectPressTime;
       return this;
     }
 
@@ -1088,14 +1087,14 @@ WARNING: Use with caution. Custom ordering is not suitable for large amounts of 
     }
 
     /**
-     * Sets the {@code maxMinorCharacters} and returns a reference to this Builder enabling method chaining.
+     * Sets the {@code maxMinorChars} and returns a reference to this Builder enabling method chaining.
      *
-     * @param maxMinorCharacters the {@code maxMinorCharacters} to set
+     * @param maxMinorChars the {@code maxMinorChars} to set
      * @return a reference to this Builder
      */
     @Nonnull
-    public Builder withMaxMinorCharacters(int maxMinorCharacters) {
-      this.maxMinorCharacters = maxMinorCharacters;
+    public Builder withMaxMinorChars(int maxMinorChars) {
+      this.maxMinorChars = maxMinorChars;
       return this;
     }
 

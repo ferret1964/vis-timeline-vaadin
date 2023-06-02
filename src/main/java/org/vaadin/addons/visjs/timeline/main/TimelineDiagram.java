@@ -106,6 +106,7 @@ public class TimelineDiagram extends Component implements HasSize {
             getElement(), itemArray, groupsArray, optionsToJson(options));
 
 
+
   }
 
   @Override
