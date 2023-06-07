@@ -39,12 +39,12 @@ public class Options {
   private String locale;
 
   private Map<String, Locale> locales = new HashMap<>();
-  private int longSelectPressTimee = 251;
+  private Integer longSelectPressTime;
   private Moment moment;
   private Margin margin;
   private TimelineDate max;
   private String maxHeight;
-  private int maxMinorCharacters = 7;
+  private Integer maxMinorChars;
   private TimelineDate min;
   private String minHeight;
   private Boolean movable = Boolean.TRUE;
@@ -68,7 +68,7 @@ Provide a custom sort function to order the items. The order of the items is det
 WARNING: Use with caution. Custom ordering is not suitable for large amounts of items. On load, the Timeline will render all items once to determine their width and height. Keep the number of items in this configuration limited to a maximum of a few hundred items.
    */
 
-  private String orientation = "bottom";
+  private String orientation;// = "bottom";
   private Boolean preferZoom;
   private RollingMode rollingMode;
 
@@ -91,31 +91,30 @@ WARNING: Use with caution. Custom ordering is not suitable for large amounts of 
     this.stackSubgroups = stackSubgroups;
   }
 
-  private Boolean stackSubgroups = Boolean.TRUE;
+  private Boolean stackSubgroups;// = Boolean.TRUE;
 
   private Cluster cluster;
 
   private TimelineDate start;
 
   //private Function snap;
-  //TODO:
-  //private Function template;
+  private Function template;
   private String templateCode;
   //private Function visableFrameTemplate;
   private TimeAxis timeAxis;
   private String type;
   private Tooltip tooltip;
   private Boolean verticalScroll;
-  private String width="100%";
+  private String width;//="100%";
 
   private Xss xss;
   private Boolean zoomable;
-  private int zoomFriction = 5;
+  private Integer zoomFriction;// = 5;
   private String zoomKey;
 
-  private long zoomMax = 315360000000000L;
+  private Long zoomMax;// = 315360000000000L;
 
-  private long zoomMin=10;
+  private Long zoomMin;//=10;
 
   public static Builder newBuilder(@Nonnull Options copy) {
     Builder builder = new Builder();
@@ -138,12 +137,12 @@ WARNING: Use with caution. Custom ordering is not suitable for large amounts of 
     builder.itemsAlwaysDraggable = copy.getItemsAlwaysDraggable();
     builder.locale = copy.getLocale();
     builder.locales = copy.getLocales();
-    builder.longSelectPressTimee = copy.getLongSelectPressTimee();
+    builder.longSelectPressTime = copy.getLongSelectPressTime();
     builder.moment = copy.getMoment();
     builder.margin = copy.getMargin();
     builder.max = copy.getMax();
     builder.maxHeight = copy.getMaxHeight();
-    builder.maxMinorCharacters = copy.getMaxMinorCharacters();
+    builder.maxMinorChars = copy.getMaxMinorChars();
     builder.min = copy.getMin();
     builder.minHeight = copy.getMinHeight();
     builder.movable = copy.getMovable();
@@ -164,6 +163,7 @@ WARNING: Use with caution. Custom ordering is not suitable for large amounts of 
     builder.stackSubgroups = copy.getStackSubgroups();
     builder.cluster = copy.getCluster();
     builder.start = copy.getStart();
+    builder.template = copy.getTemplate();
     builder.templateCode = copy.getTemplateCode();
     builder.timeAxis = copy.getTimeAxis();
     builder.type = copy.getType();
@@ -291,14 +291,13 @@ WARNING: Use with caution. Custom ordering is not suitable for large amounts of 
     this.itemsAlwaysDraggable = itemsAlwaysDraggable;
   }
 
-  public int getLongSelectPressTimee() {
-    return longSelectPressTimee;
+  public Integer getLongSelectPressTime() {
+    return longSelectPressTime;
   }
 
-  public void setLongSelectPressTimee(int longSelectPressTimee) {
-    this.longSelectPressTimee = longSelectPressTimee;
+  public void setLongSelectPressTime(Integer longSelectPressTime) {
+    this.longSelectPressTime = longSelectPressTime;
   }
-
 
   public Moment getMoment() {
     return moment;
@@ -332,12 +331,12 @@ WARNING: Use with caution. Custom ordering is not suitable for large amounts of 
     this.maxHeight = maxHeight;
   }
 
-  public int getMaxMinorCharacters() {
-    return maxMinorCharacters;
+  public Integer getMaxMinorChars() {
+    return maxMinorChars;
   }
 
-  public void setMaxMinorCharacters(int maxMinorCharacters) {
-    this.maxMinorCharacters = maxMinorCharacters;
+  public void setMaxMinorChars(Integer maxMinorChars) {
+    this.maxMinorChars = maxMinorChars;
   }
 
   public TimelineDate getMin() {
@@ -387,6 +386,7 @@ WARNING: Use with caution. Custom ordering is not suitable for large amounts of 
   public void setOrientation(String orientation) {
     this.orientation = orientation;
   }
+
 
   public Boolean getPreferZoom() {
     return preferZoom;
@@ -489,10 +489,18 @@ WARNING: Use with caution. Custom ordering is not suitable for large amounts of 
   }
 
 
+  public Function getTemplate() {
+    return template;
+  }
+
+
+  public void setTemplate(Function template) {
+    this.template = template;
+  }
+
   public String getTemplateCode() {
     return templateCode;
   }
-
 
   public void setTemplateCode(String templateCode) {
     this.templateCode = templateCode;
@@ -546,11 +554,11 @@ WARNING: Use with caution. Custom ordering is not suitable for large amounts of 
     this.zoomable = zoomable;
   }
 
-  public int getZoomFriction() {
+  public Integer getZoomFriction() {
     return zoomFriction;
   }
 
-  public void setZoomFriction(int zoomFriction) {
+  public void setZoomFriction(Integer zoomFriction) {
     this.zoomFriction = zoomFriction;
   }
 
@@ -562,19 +570,19 @@ WARNING: Use with caution. Custom ordering is not suitable for large amounts of 
     this.zoomKey = zoomKey;
   }
 
-  public long getZoomMax() {
+  public Long getZoomMax() {
     return zoomMax;
   }
 
-  public void setZoomMax(long zoomMax) {
+  public void setZoomMax(Long zoomMax) {
     this.zoomMax = zoomMax;
   }
 
-  public long getZoomMin() {
+  public Long getZoomMin() {
     return zoomMin;
   }
 
-  public void setZoomMin(long zoomMin) {
+  public void setZoomMin(Long zoomMin) {
     this.zoomMin = zoomMin;
   }
 
@@ -598,12 +606,12 @@ WARNING: Use with caution. Custom ordering is not suitable for large amounts of 
     setItemsAlwaysDraggable(builder.itemsAlwaysDraggable);
     setLocale(builder.locale);
     setLocales(builder.locales);
-    setLongSelectPressTimee(builder.longSelectPressTimee);
+    setLongSelectPressTime(builder.longSelectPressTime);
     setMoment(builder.moment);
     setMargin(builder.margin);
     setMax(builder.max);
     setMaxHeight(builder.maxHeight);
-    setMaxMinorCharacters(builder.maxMinorCharacters);
+    setMaxMinorChars(builder.maxMinorChars);
     setMin(builder.min);
     setMinHeight(builder.minHeight);
     setMovable(builder.movable);
@@ -624,6 +632,7 @@ WARNING: Use with caution. Custom ordering is not suitable for large amounts of 
     setStackSubgroups(builder.stackSubgroups);
     setCluster(builder.cluster);
     setStart(builder.start);
+    setTemplate(builder.template);
     setTemplateCode(builder.templateCode);
     setTimeAxis(builder.timeAxis);
     setType(builder.type);
@@ -748,12 +757,12 @@ WARNING: Use with caution. Custom ordering is not suitable for large amounts of 
     private String locale;
 
     private Map<String, Locale> locales;
-    private int longSelectPressTimee;
+    private Integer longSelectPressTime;
     private Moment moment;
     private Margin margin;
     private TimelineDate max;
     private String maxHeight;
-    private int maxMinorCharacters;
+    private Integer maxMinorChars;
     private TimelineDate min;
     private String minHeight;
     private Boolean movable;
@@ -776,6 +785,7 @@ WARNING: Use with caution. Custom ordering is not suitable for large amounts of 
     private Boolean stackSubgroups;
     private Cluster cluster;
     private TimelineDate start;
+    private Function template;
     private String templateCode;
 
     private TimeAxis timeAxis;
@@ -786,11 +796,11 @@ WARNING: Use with caution. Custom ordering is not suitable for large amounts of 
 
     private Xss xss;
     private Boolean zoomable;
-    private int zoomFriction = 5;
+    private Integer zoomFriction;// = 5;
     private String zoomKey;
 
-    private long zoomMax = 315360000000000L;
-    private long zoomMin = 10;
+    private Long zoomMax;// = 315360000000000L;
+    private Long zoomMin;// = 10;
 
     private Builder() {
     }
@@ -1028,14 +1038,14 @@ WARNING: Use with caution. Custom ordering is not suitable for large amounts of 
     }
 
     /**
-     * Sets the {@code longSelectPressTimee} and returns a reference to this Builder enabling method chaining.
+     * Sets the {@code longSelectPressTime} and returns a reference to this Builder enabling method chaining.
      *
-     * @param longSelectPressTimee the {@code longSelectPressTimee} to set
+     * @param longSelectPressTime the {@code longSelectPressTime} to set
      * @return a reference to this Builder
      */
     @Nonnull
-    public Builder withLongSelectPressTimee(int longSelectPressTimee) {
-      this.longSelectPressTimee = longSelectPressTimee;
+    public Builder withLongSelectPressTime(Integer longSelectPressTime) {
+      this.longSelectPressTime = longSelectPressTime;
       return this;
     }
 
@@ -1088,14 +1098,14 @@ WARNING: Use with caution. Custom ordering is not suitable for large amounts of 
     }
 
     /**
-     * Sets the {@code maxMinorCharacters} and returns a reference to this Builder enabling method chaining.
+     * Sets the {@code maxMinorChars} and returns a reference to this Builder enabling method chaining.
      *
-     * @param maxMinorCharacters the {@code maxMinorCharacters} to set
+     * @param maxMinorChars the {@code maxMinorChars} to set
      * @return a reference to this Builder
      */
     @Nonnull
-    public Builder withMaxMinorCharacters(int maxMinorCharacters) {
-      this.maxMinorCharacters = maxMinorCharacters;
+    public Builder withMaxMinorChars(Integer maxMinorChars) {
+      this.maxMinorChars = maxMinorChars;
       return this;
     }
 
@@ -1334,6 +1344,18 @@ WARNING: Use with caution. Custom ordering is not suitable for large amounts of 
     }
 
     /**
+     * Sets the {@code template} and returns a reference to this Builder enabling method chaining.
+     *
+     * @param template the {@code template} to set
+     * @return a reference to this Builder
+     */
+    @Nonnull
+    public Builder withTemplate(@Nonnull Function template) {
+      this.template = template;
+      return this;
+    }
+
+    /**
      * Sets the {@code templateCode} and returns a reference to this Builder enabling method chaining.
      *
      * @param templateCode the {@code templateCode} to set
@@ -1436,7 +1458,7 @@ WARNING: Use with caution. Custom ordering is not suitable for large amounts of 
      * @return a reference to this Builder
      */
     @Nonnull
-    public Builder withZoomFriction(int zoomFriction) {
+    public Builder withZoomFriction(Integer zoomFriction) {
       this.zoomFriction = zoomFriction;
       return this;
     }
@@ -1460,7 +1482,7 @@ WARNING: Use with caution. Custom ordering is not suitable for large amounts of 
      * @return a reference to this Builder
      */
     @Nonnull
-    public Builder withZoomMax(long zoomMax) {
+    public Builder withZoomMax(Long zoomMax) {
       this.zoomMax = zoomMax;
       return this;
     }
@@ -1472,7 +1494,7 @@ WARNING: Use with caution. Custom ordering is not suitable for large amounts of 
      * @return a reference to this Builder
      */
     @Nonnull
-    public Builder withZoomMin(long zoomMin) {
+    public Builder withZoomMin(Long zoomMin) {
       this.zoomMin = zoomMin;
       return this;
     }

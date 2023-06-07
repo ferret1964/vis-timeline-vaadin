@@ -4,6 +4,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+import com.vaadin.flow.component.dependency.CssImport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,6 +42,7 @@ import com.vaadin.flow.component.dependency.NpmPackage;
  */
 @SuppressWarnings("serial")
 @Tag("div")
+@CssImport("./vis-network.css")
 @JsModule("./timeline-loader-new.ts")
 @JsModule("./timelineDiagram-connector-flow.js")
 @JsModule("vis-timeline/standalone/umd/vis-timeline-graph2d.min.js")
@@ -97,13 +99,13 @@ public class TimelineDiagram extends Component implements HasSize {
       e.printStackTrace();
     }
 
-
     getUI()
         .orElseThrow(() -> new IllegalStateException(
             "Connector can only be initialized for an attached NetworkDiagram"))
         .getPage()
         .executeJs("window.Vaadin.Flow.timelineDiagramConnector.initLazy($0, $1, $2, $3)",
             getElement(), itemArray, groupsArray, optionsToJson(options));
+
 
 
   }

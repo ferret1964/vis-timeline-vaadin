@@ -1,11 +1,16 @@
 package org.vaadin.addons.visjs.timeline.main;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import org.vaadin.addons.visjs.timeline.options.items.Editable;
 
 import javax.annotation.Nonnull;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @JsonDeserialize(builder = Items.Builder.class)
 public class Items
@@ -15,11 +20,19 @@ public class Items
     private String align;
     private String content;
     // End needs special handling for object versus string
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    //@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime end;
     private Object group;
     private String id;
+    private String networkJSON;
     private Boolean selectable;
     // Start needs special handling for object versus string
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime start;
     private String style;
     private String subgroup;
@@ -50,6 +63,14 @@ public class Items
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getNetworkJSON() {
+        return networkJSON;
+    }
+
+    public void setNetworkJSON(String networkJSON) {
+        this.networkJSON = networkJSON;
     }
 
     public Boolean getSelectable() {
@@ -116,6 +137,7 @@ public class Items
         this.end = builder.end;
         this.group = builder.group;
         this.id = builder.id;
+        this.networkJSON = builder.networkJSON;
         this.selectable = builder.selectable;
         this.start = builder.start;
         this.style = builder.style;
@@ -182,6 +204,7 @@ public class Items
         private LocalDateTime end;
         private Object group;
         private String id;
+        private String networkJSON;
         private Boolean selectable;
         // Start needs special handling for object versus string
         private LocalDateTime start;
