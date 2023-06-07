@@ -75,14 +75,14 @@ public class OptionsTest extends TestCase {
         options.setZoomFriction(8);
         options.setZoomKey("altKey");
         options.setZoomMax(3153600000000L);
-        options.setZoomMin(15);
+        options.setZoomMin(15L);
         //
         options.setStart(TimelineDate.newBuilder().withDate(LocalDate.now()).build());
         options.setEnd(TimelineDate.newBuilder().withString("tomorrow").build());
         options.setMax(TimelineDate.newBuilder().withMoment(Instant.now()).build());
         options.setMin(TimelineDate.newBuilder().withNumber(1000).build());
         //
-        options.setTemplateCode("function (item, elelment, data) {return \"<div class=\\\"card\\\"><div class=\\\"card-title\">Encounter</div><div class=\\\"card-location\\\"></div>\"+patientLocations(item.id)+\"</div></div><div class=\\\"network-node\\\" id= \\\"tl\" + item.id + \"\\\"></div>\";");
+        options.setTemplate(new Function("function (item, elelment, data) {return \"<div class=\\\"card\\\"><div class=\\\"card-title\">Encounter</div><div class=\\\"card-location\\\"></div>\"+patientLocations(item.id)+\"</div></div><div class=\\\"network-node\\\" id= \\\"tl\" + item.id + \"\\\"></div>\";"));
         return options;
     }
     @Test

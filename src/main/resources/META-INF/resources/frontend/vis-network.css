@@ -1,0 +1,125 @@
+
+/* To have item below top and not neat bottom*/
+.vis-itemset .vis-foreground {
+    height: 100%;
+    overflow: visible;
+    position: absolute;
+    width: 100%;
+    top: -130px;
+}
+.vis-foreground .vis-group{
+    height: 100% !important;
+}
+
+.card{
+    margin: 5px;
+}
+/* To have line from the item to the bottom connected */
+.vis-item.vis-line {
+    border-left-style: solid;
+    border-left-width: 1px;
+    padding: 0;
+    position: absolute;
+    width: 0;
+    height: 100% !important;
+}
+
+.vis-item .vis-item-overflow {
+    height: 100%;
+    margin: 0;
+    overflow: visible;
+    padding: 0;
+    position: relative;
+    width: 100%;
+}
+
+.vis-item .vis-item-content {
+    box-sizing: border-box;
+    padding: 5px;
+    white-space: nowrap;
+    width: 100%;
+}
+
+.network-node {
+    display: inline-block;
+    /*height: 90px;
+    line-height: 90px;*/
+    vertical-align: middle;
+    position:absolute;
+    margin-left: 20px;
+}
+.card {
+    height:90px;
+    display: inline-block;
+}
+.card-title {
+    font-weight: bold;
+    font-size: 30px;
+    width:102%;
+}
+.card-location {
+    font-size: 17px;
+    width:102%;
+}
+.tooltip {
+    position: absolute;
+    font-weight: bold;
+    font-size: 24px;
+    border: 5px solid #5494db;
+    padding: 2px 2px;
+    background-color: #F7FFF7;
+    text-align: center;
+    top: -120%;
+}
+
+.tooltip-left::before {
+    content: '';
+    position: absolute;
+    display: block;
+    width: 0px;
+    left: 0;
+    top: 50%;
+    border: 15px solid transparent;
+    border-left: 0;
+    border-right: 15px solid #5494db;
+    transform: translate(calc(-100% - 5px), -50%);
+}
+
+.tooltip-top::before {
+    content: '';
+    position: absolute;
+    display: block;
+    width: 0px;
+    left: 50%;
+    top: 0;
+    border: 15px solid transparent;
+    border-top: 0;
+    border-bottom: 15px solid #5494db;
+    transform: translate(-50%, calc(-100% - 5px));
+}
+
+.tooltip-right::before {
+    content: '';
+    position: absolute;
+    display: block;
+    width: 0px;
+    right: 0;
+    top: 50%;
+    border: 15px solid transparent;
+    border-right: 0;
+    border-left: 15px solid #5494db;
+    transform: translate(calc(100% + 5px), -50%);
+}
+
+.tooltip-bottom::before {
+    content: '';
+    position: absolute;
+    display: block;
+    width: 0px;
+    left: 50%;
+    bottom: 0;
+    border: 15px solid transparent;
+    border-bottom: 0;
+    border-top: 15px solid #5494db;
+    transform: translate(-50%, calc(100% + 5px));
+}
